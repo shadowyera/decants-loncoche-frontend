@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom"
 import { useCart } from "../hooks/useCart"
 
 import { Button } from "../../../shared/components/ui/Button"
-import { API_URL } from "../../../shared/config/env"
 
 const MAX_PERFUME_DECANTS = 5
 
@@ -157,7 +156,7 @@ export function CartDrawer() {
                     {item.perfumeImagen && (
 
                       <img
-                        src={`${API_URL}${item.perfumeImagen}`}
+                        src={item.perfumeImagen}
                         className="w-16 h-16 object-contain"
                       />
 

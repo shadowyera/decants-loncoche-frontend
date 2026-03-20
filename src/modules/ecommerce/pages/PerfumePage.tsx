@@ -152,7 +152,7 @@ export function PerfumePage() {
             {producto.imagen ? (
 
               <motion.img
-                src={`${import.meta.env.VITE_API_URL}${producto.imagen}`}
+                src={producto.imagen}
                 alt={producto.nombre}
                 animate={{ y: [-8, 8, -8] }}
                 transition={{

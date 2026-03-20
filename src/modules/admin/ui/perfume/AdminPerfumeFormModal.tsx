@@ -1,7 +1,6 @@
 import { Loader2 } from "lucide-react"
 
 import { Button } from "../../../../shared/components/ui/Button"
-import { API_URL } from "../../../../shared/config/env"
 
 import type { Perfume } from "../../../../domains/perfume/domain/perfume.types"
 
@@ -184,7 +183,7 @@ export default function AdminPerfumeFormModal({
               <div className="flex justify-center">
 
                 <img
-                  src={`${API_URL}${form.imagen}`}
+                  src={form.imagen}
                   alt="Preview perfume"
                   className="h-32 object-contain"
                 />

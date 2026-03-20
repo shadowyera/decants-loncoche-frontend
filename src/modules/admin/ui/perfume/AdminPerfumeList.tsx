@@ -3,7 +3,6 @@ import { Loader2, Plus } from "lucide-react"
 import { Card } from "../../../../shared/components/ui/Card"
 import { Button } from "../../../../shared/components/ui/Button"
 
-import { API_URL } from "../../../../shared/config/env"
 
 import type { Perfume } from "../../../../domains/perfume/domain/perfume.types"
 
@@ -102,7 +101,7 @@ export default function AdminPerfumeList({
                 {p.imagen ? (
 
                   <img
-                    src={`${API_URL}${p.imagen}`}
+                    src={p.imagen}
                     alt={p.nombre}
                     loading="lazy"
                     className="object-contain max-h-full"

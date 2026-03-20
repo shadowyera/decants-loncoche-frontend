@@ -2,7 +2,6 @@ import { Link } from "react-router-dom"
 import type { CatalogoProducto } from "../domain/catalogo.types"
 
 import { Card } from "../../../shared/components/ui/Card"
-import { API_URL } from "../../../shared/config/env"
 
 interface PerfumeCardProps {
   producto: CatalogoProducto
@@ -125,7 +124,7 @@ export function PerfumeCard({ producto }: PerfumeCardProps) {
 
             <>
               <img
-                src={`${API_URL}${producto.imagen}`}
+                src={producto.imagen}
                 alt={producto.nombre}
                 className="
                   w-full

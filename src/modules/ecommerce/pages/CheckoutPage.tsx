@@ -8,7 +8,6 @@ import { Button } from "../../../shared/components/ui/Button"
 import { useCart } from "../../../domains/carrito/hooks/useCart"
 import { crearPedidoApi } from "../../../domains/pedido/api/pedido.api"
 
-import { API_URL } from "../../../shared/config/env"
 
 export function CheckoutPage() {
 
@@ -332,7 +331,7 @@ export function CheckoutPage() {
                     {item.perfumeImagen && (
 
                       <img
-                        src={`${API_URL}${item.perfumeImagen}`}
+                        src={item.perfumeImagen}
                         className="
                           w-14
                           h-14
