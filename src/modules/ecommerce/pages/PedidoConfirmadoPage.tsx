@@ -53,7 +53,7 @@ export function PedidoConfirmadoPage() {
     .join("\n")
 
   const whatsappUrl =
-    `https://wa.me/56994585039?text=${encodeURIComponent(mensaje)}`
+    `https://wa.me/56930913587?text=${encodeURIComponent(mensaje)}`
 
   function handleWhatsappClick() {
     window.open(whatsappUrl, "_blank")

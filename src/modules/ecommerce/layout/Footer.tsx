@@ -106,7 +106,7 @@ export function Footer() {
               </p>
 
               <a
-                href="https://wa.me/56994585039"
+                href="https://wa.me/56930913587"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-text transition-colors"
