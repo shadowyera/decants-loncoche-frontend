@@ -8,6 +8,7 @@ import { useCart } from "../../carrito/hooks/useCart"
 
 interface DecantSelectorProps {
   decants: CatalogoDecant[]
+  perfumeId: string // 🔥 FIX
   perfumeNombre: string
   perfumeImagen?: string
   disabled?: boolean
@@ -15,6 +16,7 @@ interface DecantSelectorProps {
 
 export function DecantSelector({
   decants,
+  perfumeId,
   perfumeNombre,
   perfumeImagen,
   disabled = false
@@ -72,6 +74,7 @@ export function DecantSelector({
 
     addItem({
       decantId: selectedDecant.id,
+      perfumeId, // 🔥 FIX IMPORTANTE
       ml: selectedDecant.ml,
       precio: selectedDecant.precio,
       cantidad: 1,
@@ -192,7 +195,7 @@ export function DecantSelector({
 
           {limiteAlcanzado && (
             <p className="text-xs text-muted">
-              Máximo 5 unidades por producto
+              Máximo {MAX_DECANTS} unidades por producto
             </p>
           )}
 

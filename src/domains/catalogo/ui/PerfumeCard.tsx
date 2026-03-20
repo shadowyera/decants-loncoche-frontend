@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 import type { CatalogoProducto } from "../domain/catalogo.types"
 
 import { Card } from "../../../shared/components/ui/Card"
-import { API_URL } from "../../../shared/api/api"
+import { API_URL } from "../../../shared/config/env"
 
 interface PerfumeCardProps {
   producto: CatalogoProducto

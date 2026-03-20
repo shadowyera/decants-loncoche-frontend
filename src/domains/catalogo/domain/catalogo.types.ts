@@ -1,11 +1,20 @@
 export interface CatalogoDecant {
-
   id: string
+  perfumeId: string
+
   ml: number
   precio: number
-  stockDisponible: number
-  sku: string
 
+  stockDisponible: number
+}
+
+export interface CatalogoPerfume {
+  id: string
+  nombre: string
+  marca: string
+  imagen?: string
+
+  decants: CatalogoDecant[]
 }
 
 export interface CatalogoProducto {

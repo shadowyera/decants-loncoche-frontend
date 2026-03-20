@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom"
 import { useCart } from "../hooks/useCart"
 
 import { Button } from "../../../shared/components/ui/Button"
-import { API_URL } from "../../../shared/api/api"
+import { API_URL } from "../../../shared/config/env"
 
 const MAX_PERFUME_DECANTS = 5
 

@@ -3,7 +3,7 @@ import { Loader2, Plus } from "lucide-react"
 import { Card } from "../../../../shared/components/ui/Card"
 import { Button } from "../../../../shared/components/ui/Button"
 
-import { API_URL } from "../../../../shared/api/api"
+import { API_URL } from "../../../../shared/config/env"
 
 import type { Perfume } from "../../../../domains/perfume/domain/perfume.types"
 

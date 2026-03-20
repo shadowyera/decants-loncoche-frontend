@@ -10,7 +10,6 @@ import { PerfumeCard } from "../../../domains/catalogo/ui/PerfumeCard"
 import { ProductTrustBadges } from "../../../domains/catalogo/ui/ProductTrustBadges"
 
 import { Container } from "../../../shared/components/ui/Container"
-import { API_URL } from "../../../shared/api/api"
 
 export function PerfumePage() {
 
@@ -153,7 +152,7 @@ export function PerfumePage() {
             {producto.imagen ? (
 
               <motion.img
-                src={`${API_URL}${producto.imagen}`}
+                src={`${import.meta.env.VITE_API_URL}${producto.imagen}`}
                 alt={producto.nombre}
                 animate={{ y: [-8, 8, -8] }}
                 transition={{
@@ -219,17 +218,10 @@ export function PerfumePage() {
 
                 {!hayDecants && (
 
-                  <span
-                    className="
-                      text-xs
-                      px-3
-                      py-1
-                      rounded-full
-                      border
-                      border-border
-                      text-muted
-                    "
-                  >
+                  <span className="
+                    text-xs px-3 py-1 rounded-full
+                    border border-border text-muted
+                  ">
                     Próximamente
                   </span>
 
@@ -237,17 +229,10 @@ export function PerfumePage() {
 
                 {hayDecants && !disponible && (
 
-                  <span
-                    className="
-                      text-xs
-                      px-3
-                      py-1
-                      rounded-full
-                      border
-                      border-border
-                      text-muted
-                    "
-                  >
+                  <span className="
+                    text-xs px-3 py-1 rounded-full
+                    border border-border text-muted
+                  ">
                     Sin stock
                   </span>
 
@@ -255,16 +240,10 @@ export function PerfumePage() {
 
                 {disponible && pocoStock && (
 
-                  <span
-                    className="
-                      text-xs
-                      px-3
-                      py-1
-                      rounded-full
-                      bg-red-500
-                      text-white
-                    "
-                  >
+                  <span className="
+                    text-xs px-3 py-1 rounded-full
+                    bg-red-500 text-white
+                  ">
                     ⚡ Poco stock
                   </span>
 
@@ -279,14 +258,9 @@ export function PerfumePage() {
 
             {producto.descripcion && (
 
-              <p
-                className="
-                  text-muted
-                  text-lg
-                  leading-relaxed
-                  max-w-lg
-                "
-              >
+              <p className="
+                text-muted text-lg leading-relaxed max-w-lg
+              ">
                 {producto.descripcion}
               </p>
 
@@ -299,14 +273,9 @@ export function PerfumePage() {
 
               <div className="space-y-4">
 
-                <p
-                  className="
-                    text-sm
-                    text-muted
-                    tracking-[0.2em]
-                    uppercase
-                  "
-                >
+                <p className="
+                  text-sm text-muted tracking-[0.2em] uppercase
+                ">
                   Perfil olfativo
                 </p>
 
@@ -317,14 +286,9 @@ export function PerfumePage() {
                     <span
                       key={familia}
                       className="
-                        px-3
-                        py-1
-                        text-xs
-                        rounded-full
-                        border
-                        border-accent/30
-                        text-accent
-                        bg-accent/10
+                        px-3 py-1 text-xs rounded-full
+                        border border-accent/30
+                        text-accent bg-accent/10
                       "
                     >
                       {familia}
@@ -343,14 +307,9 @@ export function PerfumePage() {
 
             <div className="space-y-4">
 
-              <p
-                className="
-                  text-sm
-                  font-medium
-                  tracking-wide
-                  text-text
-                "
-              >
+              <p className="
+                text-sm font-medium tracking-wide text-text
+              ">
                 Tamaño
               </p>
 
@@ -370,6 +329,7 @@ export function PerfumePage() {
 
                 <DecantSelector
                   decants={producto.decants}
+                  perfumeId={producto.id} // 🔥 FIX
                   perfumeNombre={producto.nombre}
                   perfumeImagen={producto.imagen}
                 />
@@ -390,15 +350,9 @@ export function PerfumePage() {
 
               <div className="pt-8 border-t border-border">
 
-                <p
-                  className="
-                    text-sm
-                    text-muted
-                    mb-5
-                    tracking-[0.2em]
-                    uppercase
-                  "
-                >
+                <p className="
+                  text-sm text-muted mb-5 tracking-[0.2em] uppercase
+                ">
                   Notas principales
                 </p>
 
@@ -409,19 +363,10 @@ export function PerfumePage() {
                     <span
                       key={nota}
                       className="
-                        px-4
-                        py-1.5
-                        text-sm
-                        rounded-full
-                        text-text
-                        bg-white/5
-                        border
-                        border-border
-                        backdrop-blur
-                        hover:border-accent
-                        hover:text-accent
-                        transition-all
-                        duration-300
+                        px-4 py-1.5 text-sm rounded-full
+                        text-text bg-white/5 border border-border
+                        backdrop-blur hover:border-accent
+                        hover:text-accent transition-all duration-300
                       "
                     >
                       {nota}
@@ -450,28 +395,16 @@ export function PerfumePage() {
 
           <Container className="space-y-12">
 
-            <h2
-              className="
-                font-serif
-                text-3xl
-                text-text
-              "
-            >
+            <h2 className="font-serif text-3xl text-text">
               También te podría gustar
             </h2>
 
-            <div
-              className="
-                grid
-                grid-cols-2
-                md:grid-cols-3
-                lg:grid-cols-4
-                gap-x-6
-                gap-y-10
-              "
-            >
+            <div className="
+              grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4
+              gap-x-6 gap-y-10
+            ">
 
-              {recomendaciones?.map((perfume) => (
+              {(recomendaciones ?? []).map((perfume) => (
 
                 <PerfumeCard
                   key={perfume.id}
@@ -479,7 +412,6 @@ export function PerfumePage() {
                 />
 
               ))}
-
             </div>
 
           </Container>

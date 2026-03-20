@@ -1,15 +1,10 @@
 import axios from "axios"
 
 export const apiClient = axios.create({
-  baseURL: "/api"
+  baseURL: import.meta.env.VITE_API_URL
 })
 
-/* =================================
-   INTERCEPTOR AUTH
-================================= */
-
 apiClient.interceptors.request.use((config) => {
-
   const token = localStorage.getItem("token")
 
   if (token) {
@@ -17,5 +12,4 @@ apiClient.interceptors.request.use((config) => {
   }
 
   return config
-
 })

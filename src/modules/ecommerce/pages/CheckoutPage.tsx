@@ -8,7 +8,7 @@ import { Button } from "../../../shared/components/ui/Button"
 import { useCart } from "../../../domains/carrito/hooks/useCart"
 import { crearPedidoApi } from "../../../domains/pedido/api/pedido.api"
 
-import { API_URL } from "../../../shared/api/api"
+import { API_URL } from "../../../shared/config/env"
 
 export function CheckoutPage() {
 
