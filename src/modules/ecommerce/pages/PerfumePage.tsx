@@ -28,8 +28,8 @@ export function PerfumePage() {
 
   if (isLoading) {
     return (
-      <Container className="py-24 text-center">
-        <p className="text-muted">
+      <Container className="py-20 text-center">
+        <p className="text-muted text-sm">
           Cargando perfume...
         </p>
       </Container>
@@ -38,8 +38,8 @@ export function PerfumePage() {
 
   if (isError || !producto) {
     return (
-      <Container className="py-24 text-center">
-        <p className="text-muted">
+      <Container className="py-20 text-center">
+        <p className="text-muted text-sm">
           Producto no encontrado
         </p>
       </Container>
@@ -47,7 +47,15 @@ export function PerfumePage() {
   }
 
   /* =========================
-     DISPONIBILIDAD REAL
+     FIX TYPESCRIPT
+  ========================= */
+
+  const notas = producto.notas ?? []
+  const familias = producto.familiasOlfativas ?? []
+  const recs = recomendaciones ?? []
+
+  /* =========================
+     DISPONIBILIDAD
   ========================= */
 
   const hayDecants = producto.decants.length > 0
@@ -62,53 +70,32 @@ export function PerfumePage() {
 
   return (
 
-    <div className="py-24 space-y-32">
+    <div className="py-16 md:py-24 space-y-16 md:space-y-32">
 
       <Container className="max-w-6xl">
 
-        {/* BACK BUTTON */}
+        {/* BACK */}
 
         <button
           onClick={() => navigate("/catalogo")}
-          className="
-            flex
-            items-center
-            gap-2
-            text-sm
-            text-muted
-            hover:text-text
-            transition
-            mb-6
-          "
+          className="flex items-center gap-2 text-xs sm:text-sm text-muted hover:text-text transition mb-4"
         >
-          <ArrowLeft size={18} />
-          Volver al catálogo
+          <ArrowLeft size={16} />
+          Volver
         </button>
 
 
         {/* BREADCRUMB */}
 
-        <div
-          className="
-            flex
-            items-center
-            gap-2
-            text-sm
-            text-muted
-            mb-12
-          "
-        >
+        <div className="flex items-center gap-2 text-xs sm:text-sm text-muted mb-6 md:mb-12">
 
-          <Link
-            to="/catalogo"
-            className="hover:text-accent transition"
-          >
+          <Link to="/catalogo" className="hover:text-accent transition">
             Catálogo
           </Link>
 
           <span className="opacity-50">/</span>
 
-          <span className="text-text">
+          <span className="text-text truncate">
             {producto.nombre}
           </span>
 
@@ -121,57 +108,32 @@ export function PerfumePage() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="grid md:grid-cols-2 gap-24 items-start"
+          className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 items-start"
         >
 
-          {/* PERFUME IMAGE */}
+          {/* IMAGEN */}
 
-          <div
-            className="
-              relative
-              flex
-              items-center
-              justify-center
-              p-12
-            "
-          >
+          <div className="relative flex items-center justify-center p-6 sm:p-10 md:p-12">
 
-            <div
-              className="
-                absolute
-                bottom-6
-                w-[240px]
-                h-[50px]
-                bg-black/70
-                blur-3xl
-                rounded-full
-                opacity-60
-              "
-            />
+            <div className="absolute bottom-4 w-[180px] sm:w-[240px] h-[40px] sm:h-[50px] bg-black/70 blur-3xl rounded-full opacity-60" />
 
             {producto.imagen ? (
 
               <motion.img
                 src={producto.imagen}
                 alt={producto.nombre}
-                animate={{ y: [-8, 8, -8] }}
+                animate={{ y: [-6, 6, -6] }}
                 transition={{
                   duration: 6,
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}
-                className="
-                  relative
-                  z-10
-                  object-contain
-                  max-h-[520px]
-                  mx-auto
-                "
+                className="relative z-10 object-contain max-h-[260px] sm:max-h-[320px] md:max-h-[520px]"
               />
 
             ) : (
 
-              <div className="flex items-center justify-center h-[400px] text-muted">
+              <div className="flex items-center justify-center h-[250px] text-muted text-sm">
                 Sin imagen
               </div>
 
@@ -182,71 +144,38 @@ export function PerfumePage() {
 
           {/* INFO */}
 
-          <div className="space-y-12">
+          <div className="space-y-8 md:space-y-12">
 
-            {/* BRAND + NAME */}
+            {/* TITULO */}
 
             <div>
 
-              <p
-                className="
-                  text-sm
-                  tracking-[0.25em]
-                  uppercase
-                  text-accent
-                "
-              >
+              <p className="text-xs sm:text-sm tracking-[0.25em] uppercase text-accent">
                 {producto.marca}
               </p>
 
-              <h1
-                className="
-                  font-serif
-                  text-4xl
-                  md:text-5xl
-                  leading-tight
-                  mt-3
-                  text-text
-                "
-              >
+              <h1 className="font-serif text-2xl sm:text-3xl md:text-5xl leading-tight mt-2 md:mt-3 text-text">
                 {producto.nombre}
               </h1>
 
-              {/* ESTADO STOCK */}
-
-              <div className="pt-4 flex gap-3">
+              <div className="pt-3 flex gap-2 flex-wrap">
 
                 {!hayDecants && (
-
-                  <span className="
-                    text-xs px-3 py-1 rounded-full
-                    border border-border text-muted
-                  ">
+                  <span className="text-[10px] px-2 py-0.5 rounded-full border border-border text-muted">
                     Próximamente
                   </span>
-
                 )}
 
                 {hayDecants && !disponible && (
-
-                  <span className="
-                    text-xs px-3 py-1 rounded-full
-                    border border-border text-muted
-                  ">
+                  <span className="text-[10px] px-2 py-0.5 rounded-full border border-border text-muted">
                     Sin stock
                   </span>
-
                 )}
 
                 {disponible && pocoStock && (
-
-                  <span className="
-                    text-xs px-3 py-1 rounded-full
-                    bg-red-500 text-white
-                  ">
+                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-red-500 text-white">
                     ⚡ Poco stock
                   </span>
-
                 )}
 
               </div>
@@ -257,39 +186,29 @@ export function PerfumePage() {
             {/* DESCRIPCIÓN */}
 
             {producto.descripcion && (
-
-              <p className="
-                text-muted text-lg leading-relaxed max-w-lg
-              ">
+              <p className="text-muted text-sm sm:text-base leading-relaxed max-w-lg">
                 {producto.descripcion}
               </p>
-
             )}
 
 
             {/* PERFIL OLFATIVO */}
 
-            {(producto.familiasOlfativas?.length ?? 0) > 0 && (
+            {familias.length > 0 && (
 
-              <div className="space-y-4">
+              <div className="space-y-3">
 
-                <p className="
-                  text-sm text-muted tracking-[0.2em] uppercase
-                ">
+                <p className="text-xs tracking-[0.2em] uppercase text-muted">
                   Perfil olfativo
                 </p>
 
                 <div className="flex flex-wrap gap-2">
 
-                  {producto.familiasOlfativas?.map((familia) => (
+                  {familias.map((familia) => (
 
                     <span
                       key={familia}
-                      className="
-                        px-3 py-1 text-xs rounded-full
-                        border border-accent/30
-                        text-accent bg-accent/10
-                      "
+                      className="px-2.5 py-1 text-[10px] sm:text-xs rounded-full border border-accent/30 text-accent bg-accent/10"
                     >
                       {familia}
                     </span>
@@ -303,37 +222,29 @@ export function PerfumePage() {
             )}
 
 
-            {/* DECANT SELECTOR */}
+            {/* SELECTOR */}
 
-            <div className="space-y-4">
+            <div className="space-y-3">
 
-              <p className="
-                text-sm font-medium tracking-wide text-text
-              ">
+              <p className="text-sm font-medium text-text">
                 Tamaño
               </p>
 
               {!hayDecants ? (
-
-                <p className="text-muted">
+                <p className="text-muted text-sm">
                   Disponible próximamente
                 </p>
-
               ) : !disponible ? (
-
-                <p className="text-muted">
+                <p className="text-muted text-sm">
                   Sin stock actualmente
                 </p>
-
               ) : (
-
                 <DecantSelector
                   decants={producto.decants}
-                  perfumeId={producto.id} // 🔥 FIX
+                  perfumeId={producto.id}
                   perfumeNombre={producto.nombre}
                   perfumeImagen={producto.imagen}
                 />
-
               )}
 
             </div>
@@ -346,28 +257,21 @@ export function PerfumePage() {
 
             {/* NOTAS */}
 
-            {(producto.notas?.length ?? 0) > 0 && (
+            {notas.length > 0 && (
 
-              <div className="pt-8 border-t border-border">
+              <div className="pt-6 md:pt-8 border-t border-border">
 
-                <p className="
-                  text-sm text-muted mb-5 tracking-[0.2em] uppercase
-                ">
+                <p className="text-xs tracking-[0.2em] uppercase text-muted mb-4">
                   Notas principales
                 </p>
 
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-wrap gap-2 sm:gap-3">
 
-                  {producto.notas?.map((nota) => (
+                  {notas.map((nota) => (
 
                     <span
                       key={nota}
-                      className="
-                        px-4 py-1.5 text-sm rounded-full
-                        text-text bg-white/5 border border-border
-                        backdrop-blur hover:border-accent
-                        hover:text-accent transition-all duration-300
-                      "
+                      className="px-3 py-1 text-xs sm:text-sm rounded-full text-text bg-white/5 border border-border"
                     >
                       {nota}
                     </span>
@@ -389,22 +293,19 @@ export function PerfumePage() {
 
       {/* RECOMENDACIONES */}
 
-      {(recomendaciones?.length ?? 0) > 0 && (
+      {recs.length > 0 && (
 
-        <section className="pt-20">
+        <section>
 
-          <Container className="space-y-12">
+          <Container className="space-y-6 md:space-y-12">
 
-            <h2 className="font-serif text-3xl text-text">
+            <h2 className="font-serif text-xl sm:text-2xl md:text-3xl text-text">
               También te podría gustar
             </h2>
 
-            <div className="
-              grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4
-              gap-x-6 gap-y-10
-            ">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6">
 
-              {(recomendaciones ?? []).map((perfume) => (
+              {recs.map((perfume) => (
 
                 <PerfumeCard
                   key={perfume.id}
@@ -412,6 +313,7 @@ export function PerfumePage() {
                 />
 
               ))}
+
             </div>
 
           </Container>

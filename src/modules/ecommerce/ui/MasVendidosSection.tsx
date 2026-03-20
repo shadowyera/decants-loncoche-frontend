@@ -7,44 +7,53 @@ export function MasVendidosSection() {
 
   const { productos, isLoading } = useMasVendidos()
 
-  if (isLoading || productos.length === 0) {
+  const lista = productos ?? []
+
+  if (isLoading || lista.length === 0) {
     return null
   }
 
   return (
 
-    <section className="py-24">
+    <section className="py-16 md:py-24">
 
-      <Container className="space-y-14">
+      <Container className="space-y-8 md:space-y-14">
 
-        <div className="text-center space-y-4">
+        {/* HEADER */}
 
-          <p className="text-accent text-sm tracking-[0.3em] uppercase">
+        <div className="text-center space-y-2 md:space-y-4">
+
+          <p className="text-accent text-xs sm:text-sm tracking-[0.25em] uppercase">
             Perfumes populares
           </p>
 
-          <h2 className="font-serif text-4xl text-text">
+          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl text-text">
             Más vendidos
           </h2>
 
-          <p className="text-muted">
+          <p className="text-muted text-sm sm:text-base max-w-md mx-auto">
             Algunos de los perfumes más buscados en nuestra tienda.
           </p>
 
         </div>
 
+
+        {/* GRID */}
+
         <div
           className="
             grid
             grid-cols-2
+            sm:grid-cols-2
             md:grid-cols-3
             lg:grid-cols-4
-            gap-x-6
-            gap-y-10
+            gap-4
+            sm:gap-5
+            md:gap-6
           "
         >
 
-          {productos.map((producto) => (
+          {lista.map((producto) => (
 
             <PerfumeCard
               key={producto.id}

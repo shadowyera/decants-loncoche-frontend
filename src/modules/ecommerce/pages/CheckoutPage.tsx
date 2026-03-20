@@ -8,13 +8,11 @@ import { Button } from "../../../shared/components/ui/Button"
 import { useCart } from "../../../domains/carrito/hooks/useCart"
 import { crearPedidoApi } from "../../../domains/pedido/api/pedido.api"
 
-
 export function CheckoutPage() {
 
   const navigate = useNavigate()
 
   const { items, total, clearCart } = useCart()
-
   const totalPrice = total()
 
   const [nombre, setNombre] = useState("")
@@ -53,7 +51,6 @@ export function CheckoutPage() {
   async function handleSubmit(e: React.FormEvent) {
 
     e.preventDefault()
-
     setServerError(null)
 
     if (!items.length) {
@@ -85,7 +82,6 @@ export function CheckoutPage() {
       })
 
       clearCart()
-
       navigate(`/pedido/${pedido._id}`)
 
     } catch (err) {
@@ -104,42 +100,39 @@ export function CheckoutPage() {
 
   return (
 
-    <div className="py-24">
+    <div className="py-16 md:py-24">
 
       <Container className="max-w-6xl">
 
-        <div className="grid md:grid-cols-2 gap-20 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 items-start">
 
           {/* FORMULARIO */}
 
-          <form
-            onSubmit={handleSubmit}
-            className="space-y-10"
-          >
+          <form onSubmit={handleSubmit} className="space-y-8 md:space-y-10">
 
-            <div className="space-y-3">
+            <div className="space-y-2 text-center md:text-left">
 
-              <h1 className="font-serif text-4xl text-text">
+              <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl text-text">
                 Checkout
               </h1>
 
-              <p className="text-muted text-sm">
+              <p className="text-muted text-xs sm:text-sm">
                 Completa tus datos para crear el pedido.
               </p>
 
             </div>
 
             {serverError && (
-              <p className="text-red-400 text-sm">
+              <p className="text-red-400 text-xs sm:text-sm">
                 {serverError}
               </p>
             )}
 
             {/* NOMBRE */}
 
-            <div className="space-y-2">
+            <div className="space-y-1.5 md:space-y-2">
 
-              <label className="block text-sm text-muted">
+              <label className="block text-xs sm:text-sm text-muted">
                 Nombre
               </label>
 
@@ -150,11 +143,11 @@ export function CheckoutPage() {
                 className="
                   w-full
                   bg-surface
-                  border
-                  border-border
+                  border border-border
                   rounded-lg
-                  px-4
-                  py-3
+                  px-3 py-2.5
+                  sm:px-4 sm:py-3
+                  text-sm
                   text-text
                   placeholder:text-subtle
                   focus:outline-none
@@ -165,7 +158,7 @@ export function CheckoutPage() {
               />
 
               {errors.nombre && (
-                <p className="text-red-400 text-xs">
+                <p className="text-red-400 text-[11px] sm:text-xs">
                   {errors.nombre}
                 </p>
               )}
@@ -174,9 +167,9 @@ export function CheckoutPage() {
 
             {/* TELEFONO */}
 
-            <div className="space-y-2">
+            <div className="space-y-1.5 md:space-y-2">
 
-              <label className="block text-sm text-muted">
+              <label className="block text-xs sm:text-sm text-muted">
                 Teléfono
               </label>
 
@@ -187,11 +180,11 @@ export function CheckoutPage() {
                 className="
                   w-full
                   bg-surface
-                  border
-                  border-border
+                  border border-border
                   rounded-lg
-                  px-4
-                  py-3
+                  px-3 py-2.5
+                  sm:px-4 sm:py-3
+                  text-sm
                   text-text
                   placeholder:text-subtle
                   focus:outline-none
@@ -202,7 +195,7 @@ export function CheckoutPage() {
               />
 
               {errors.telefono && (
-                <p className="text-red-400 text-xs">
+                <p className="text-red-400 text-[11px] sm:text-xs">
                   {errors.telefono}
                 </p>
               )}
@@ -211,9 +204,9 @@ export function CheckoutPage() {
 
             {/* DIRECCION */}
 
-            <div className="space-y-2">
+            <div className="space-y-1.5 md:space-y-2">
 
-              <label className="block text-sm text-muted">
+              <label className="block text-xs sm:text-sm text-muted">
                 Dirección (opcional)
               </label>
 
@@ -224,11 +217,11 @@ export function CheckoutPage() {
                 className="
                   w-full
                   bg-surface
-                  border
-                  border-border
+                  border border-border
                   rounded-lg
-                  px-4
-                  py-3
+                  px-3 py-2.5
+                  sm:px-4 sm:py-3
+                  text-sm
                   text-text
                   placeholder:text-subtle
                   focus:outline-none
@@ -250,49 +243,23 @@ export function CheckoutPage() {
               {loading ? "Creando pedido..." : "Confirmar pedido"}
             </Button>
 
-            {/* BLOQUE DE CONFIANZA */}
+            {/* BENEFICIOS */}
 
-            <div
-              className="
-                grid
-                grid-cols-3
-                gap-4
-                pt-4
-                text-xs
-                text-muted
-                border-t
-                border-border
-              "
-            >
+            <div className="grid grid-cols-3 gap-3 sm:gap-4 pt-4 text-[10px] sm:text-xs text-muted border-t border-border">
 
-              <div className="flex flex-col items-center gap-2 text-center">
-
-                <ShieldCheck size={18} className="text-accent" />
-
-                <span>
-                  Compra segura
-                </span>
-
+              <div className="flex flex-col items-center gap-1.5 text-center">
+                <ShieldCheck size={16} className="text-accent" />
+                <span>Compra segura</span>
               </div>
 
-              <div className="flex flex-col items-center gap-2 text-center">
-
-                <Truck size={18} className="text-accent" />
-
-                <span>
-                  Envíos a todo Chile
-                </span>
-
+              <div className="flex flex-col items-center gap-1.5 text-center">
+                <Truck size={16} className="text-accent" />
+                <span>Envíos Chile</span>
               </div>
 
-              <div className="flex flex-col items-center gap-2 text-center">
-
-                <MapPin size={18} className="text-accent" />
-
-                <span>
-                  Entrega en Loncoche
-                </span>
-
+              <div className="flex flex-col items-center gap-1.5 text-center">
+                <MapPin size={16} className="text-accent" />
+                <span>Loncoche</span>
               </div>
 
             </div>
@@ -300,59 +267,46 @@ export function CheckoutPage() {
           </form>
 
 
-          {/* RESUMEN PEDIDO */}
+          {/* RESUMEN */}
 
-          <div className="space-y-6">
+          <div className="space-y-4 md:space-y-6 md:sticky md:top-24">
 
-            <h2 className="font-serif text-2xl text-text">
+            <h2 className="font-serif text-lg sm:text-xl md:text-2xl text-text text-center md:text-left">
               Tu pedido
             </h2>
 
-            <div
-              className="
-                bg-white/5
-                border
-                border-border
-                rounded-xl
-                p-6
-                space-y-6
-              "
-            >
+            <div className="bg-white/5 border border-border rounded-xl p-4 sm:p-6 space-y-4 sm:space-y-6">
 
               {items.map((item) => (
 
                 <div
                   key={item.decantId}
-                  className="flex items-center justify-between gap-4"
+                  className="flex items-center justify-between gap-3 sm:gap-4"
                 >
 
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-3 sm:gap-4">
 
                     {item.perfumeImagen && (
-
                       <img
                         src={item.perfumeImagen}
                         className="
-                          w-14
-                          h-14
+                          w-12 h-12 sm:w-14 sm:h-14
                           object-contain
                           rounded-md
                           bg-surface
-                          border
-                          border-border
+                          border border-border
                           p-1
                         "
                       />
-
                     )}
 
-                    <div className="space-y-1">
+                    <div className="space-y-0.5 sm:space-y-1">
 
-                      <p className="text-text font-medium">
+                      <p className="text-text text-sm sm:text-base font-medium">
                         {item.perfumeNombre}
                       </p>
 
-                      <p className="text-muted text-sm">
+                      <p className="text-muted text-xs sm:text-sm">
                         {item.cantidad} × {item.ml} ml
                       </p>
 
@@ -360,7 +314,7 @@ export function CheckoutPage() {
 
                   </div>
 
-                  <p className="text-text font-medium">
+                  <p className="text-text text-sm sm:text-base font-medium">
                     ${(item.precio * item.cantidad).toLocaleString()}
                   </p>
 
@@ -370,7 +324,7 @@ export function CheckoutPage() {
 
               {/* TOTAL */}
 
-              <div className="border-t border-border pt-4 flex justify-between text-lg">
+              <div className="border-t border-border pt-3 sm:pt-4 flex justify-between text-sm sm:text-lg">
 
                 <span className="text-text">
                   Total

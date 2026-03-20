@@ -18,62 +18,51 @@ export function CatalogoPage() {
 
     let lista = productos
 
-    /* =========================
-       SEARCH
-    ========================= */
-
     if (search.trim()) {
-
       const q = search.toLowerCase()
-
       lista = lista.filter((p) =>
         p.nombre.toLowerCase().includes(q) ||
         p.marca.toLowerCase().includes(q)
       )
-
     }
 
-    /* =========================
-       FILTRO POR FAMILIA
-    ========================= */
-
     if (filtro !== "todos") {
-
       lista = lista.filter((p) =>
         p.familiasOlfativas?.includes(filtro)
       )
-
     }
 
     return lista
 
   }, [productos, search, filtro])
 
+
   if (isLoading) {
     return (
-      <Container className="py-24 text-center">
-        <p className="text-muted">
+      <Container className="py-20 text-center">
+        <p className="text-muted text-sm">
           Cargando catálogo...
         </p>
       </Container>
     )
   }
 
+
   return (
 
-    <div className="pb-24">
+    <div className="pb-20">
 
-      <Container className="pt-28 space-y-12">
+      <Container className="pt-20 md:pt-28 space-y-8 md:space-y-12">
 
         {/* HEADER */}
 
-        <div className="space-y-4">
+        <div className="space-y-2 text-center md:text-left">
 
-          <h1 className="font-serif text-4xl text-text">
+          <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl text-text">
             Catálogo
           </h1>
 
-          <p className="text-muted">
+          <p className="text-muted text-sm sm:text-base max-w-md mx-auto md:mx-0">
             Descubre nuestras fragancias disponibles en formato decant.
           </p>
 
@@ -95,10 +84,8 @@ export function CatalogoPage() {
 
         {/* RESULTADOS */}
 
-        <p className="text-sm text-muted">
-
+        <p className="text-xs sm:text-sm text-muted text-center md:text-left">
           {productosFiltrados.length} perfumes encontrados
-
         </p>
 
 
@@ -108,10 +95,12 @@ export function CatalogoPage() {
           className="
             grid
             grid-cols-2
+            sm:grid-cols-2
             md:grid-cols-3
             lg:grid-cols-4
-            gap-x-6
-            gap-y-10
+            gap-4
+            sm:gap-5
+            md:gap-6
           "
         >
 

@@ -23,13 +23,13 @@ export function Header() {
         top-0
         z-50
         backdrop-blur-xl
-        bg-background/70
+        bg-background/80
         border-b
         border-border/30
       "
     >
 
-      <Container className="flex items-center justify-between h-16">
+      <Container className="flex items-center justify-between h-14 sm:h-16">
 
         {/* LOGO */}
 
@@ -37,13 +37,12 @@ export function Header() {
           to="/"
           className="
             font-serif
-            text-xl
+            text-base
+            sm:text-xl
             tracking-wide
             flex
             items-center
             gap-1
-            hover:opacity-90
-            transition
           "
         >
 
@@ -51,8 +50,10 @@ export function Header() {
             Decants
           </span>
 
+          {/* 👇 ocultamos en mobile para que no rompa */}
           <span
             className="
+              hidden sm:inline
               relative
               text-transparent
               bg-clip-text
@@ -72,23 +73,18 @@ export function Header() {
 
         {/* NAV */}
 
-        <nav className="flex items-center gap-8 text-sm">
+        <nav className="flex items-center gap-4 sm:gap-8 text-sm">
+
+          {/* CATÁLOGO (más simple en mobile) */}
 
           <Link
             to="/catalogo"
             className="
-              relative
               text-muted
-              transition-colors
               hover:text-text
-              after:absolute
-              after:left-0
-              after:-bottom-1
-              after:h-[1px]
-              after:w-0
-              after:bg-accent
-              after:transition-all
-              hover:after:w-full
+              transition-colors
+              text-xs
+              sm:text-sm
             "
           >
             Catálogo
@@ -103,24 +99,22 @@ export function Header() {
               relative
               flex
               items-center
-              gap-2
+              justify-center
+              w-9 h-9
+              sm:w-auto sm:h-auto
+              sm:gap-2
               text-muted
-              transition-colors
               hover:text-text
-              after:absolute
-              after:left-0
-              after:-bottom-1
-              after:h-[1px]
-              after:w-0
-              after:bg-accent
-              after:transition-all
-              hover:after:w-full
+              transition-colors
             "
           >
 
-            <ShoppingBag size={17} />
+            <ShoppingBag size={18} />
 
-            Carrito
+            {/* 👇 ocultamos texto en mobile */}
+            <span className="hidden sm:inline">
+              Carrito
+            </span>
 
 
             {/* CART COUNT */}
@@ -130,9 +124,9 @@ export function Header() {
               <span
                 className="
                   absolute
-                  -top-2
-                  -right-3
-                  text-[10px]
+                  -top-1.5
+                  -right-1.5
+                  text-[9px]
                   px-1.5
                   py-[1px]
                   rounded-full
@@ -141,9 +135,7 @@ export function Header() {
                   font-medium
                 "
               >
-
                 {cartCount}
-
               </span>
 
             )}

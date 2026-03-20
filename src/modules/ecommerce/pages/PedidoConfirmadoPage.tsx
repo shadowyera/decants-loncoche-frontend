@@ -13,16 +13,16 @@ export function PedidoConfirmadoPage() {
 
   if (isLoading) {
     return (
-      <Container className="py-24 text-center">
-        <p className="text-muted">Cargando pedido...</p>
+      <Container className="py-20 md:py-24 text-center">
+        <p className="text-muted text-sm">Cargando pedido...</p>
       </Container>
     )
   }
 
   if (!pedido) {
     return (
-      <Container className="py-24 text-center">
-        <p className="text-muted">Pedido no encontrado</p>
+      <Container className="py-20 md:py-24 text-center">
+        <p className="text-muted text-sm">Pedido no encontrado</p>
       </Container>
     )
   }
@@ -61,21 +61,21 @@ export function PedidoConfirmadoPage() {
 
   return (
 
-    <div className="py-28">
+    <div className="py-20 md:py-28">
 
-      <Container className="max-w-xl text-center space-y-10">
+      <Container className="max-w-xl text-center space-y-8 md:space-y-10">
 
         {/* ICONO + TITULO */}
 
-        <div className="flex flex-col items-center gap-4">
+        <div className="flex flex-col items-center gap-3 md:gap-4">
 
-          <CheckCircle size={48} className="text-accent" />
+          <CheckCircle size={40} className="text-accent md:w-12 md:h-12" />
 
-          <h1 className="font-serif text-4xl text-text">
+          <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl text-text">
             Pedido creado
           </h1>
 
-          <p className="text-muted text-lg">
+          <p className="text-muted text-sm sm:text-base">
             Solo falta un paso para confirmarlo 👇
           </p>
 
@@ -87,12 +87,11 @@ export function PedidoConfirmadoPage() {
         <div
           className="
             text-accent
-            text-xl
-            border
-            border-border
+            text-base sm:text-lg md:text-xl
+            border border-border
             rounded-lg
-            px-6
-            py-4
+            px-4 sm:px-6
+            py-3 sm:py-4
             bg-white/5
           "
         >
@@ -104,7 +103,7 @@ export function PedidoConfirmadoPage() {
 
         {(pedido.clienteNombre || pedido.clienteTelefono || pedido.direccion) && (
 
-          <div className="text-left bg-white/5 border border-border rounded-lg p-6 space-y-2">
+          <div className="text-left bg-white/5 border border-border rounded-lg p-4 sm:p-6 space-y-1.5 sm:space-y-2 text-sm">
 
             {pedido.clienteNombre && (
               <p className="text-text">
@@ -131,7 +130,7 @@ export function PedidoConfirmadoPage() {
 
         {/* RESUMEN */}
 
-        <div className="text-left bg-white/5 border border-border rounded-lg p-6 space-y-3">
+        <div className="text-left bg-white/5 border border-border rounded-lg p-4 sm:p-6 space-y-2 sm:space-y-3 text-sm">
 
           {pedido.items.map((item, i) => {
 
@@ -140,13 +139,13 @@ export function PedidoConfirmadoPage() {
 
             return (
 
-              <div key={i} className="flex justify-between text-text">
+              <div key={i} className="flex justify-between gap-2 text-text">
 
-                <span>
+                <span className="truncate">
                   {nombre} {ml}ml x{item.cantidad}
                 </span>
 
-                <span>
+                <span className="shrink-0">
                   ${(item.precioUnitario * item.cantidad).toLocaleString()}
                 </span>
 
@@ -156,7 +155,7 @@ export function PedidoConfirmadoPage() {
 
           })}
 
-          <div className="border-t border-border pt-3 flex justify-between text-lg text-accent">
+          <div className="border-t border-border pt-3 flex justify-between text-base sm:text-lg text-accent">
 
             <span>Total</span>
 
@@ -171,41 +170,43 @@ export function PedidoConfirmadoPage() {
 
         {/* BOTONES */}
 
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-3 sm:gap-4">
 
           <button
             onClick={handleWhatsappClick}
             className="
-              px-6
-              py-4
+              w-full
+              px-4 sm:px-6
+              py-3 sm:py-4
               rounded-lg
               font-medium
               bg-accent
               text-black
               hover:brightness-110
               transition
-              text-lg
+              text-sm sm:text-lg
             "
           >
             Confirmar por WhatsApp
           </button>
 
-          <p className="text-xs text-muted">
+          <p className="text-[11px] sm:text-xs text-muted">
             Se abrirá WhatsApp con tu pedido listo para enviar
           </p>
 
           <Link
             to="/"
             className="
-              px-6
-              py-3
+              w-full
+              px-4 sm:px-6
+              py-2.5 sm:py-3
               rounded-lg
-              border
-              border-accent
+              border border-accent
               text-accent
               hover:bg-accent
               hover:text-black
               transition
+              text-sm
             "
           >
             Volver al catálogo

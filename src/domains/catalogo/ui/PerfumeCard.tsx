@@ -22,10 +22,11 @@ export function PerfumeCard({ producto }: PerfumeCardProps) {
         className="
           group
           overflow-hidden
+          rounded-2xl
           bg-surface
-          border border-border/50
+          border border-border/40
           shadow-sm
-          transition-all duration-300 ease-premium
+          transition-all duration-300
           hover:shadow-lg
           hover:-translate-y-[2px]
         "
@@ -44,75 +45,30 @@ export function PerfumeCard({ producto }: PerfumeCardProps) {
 
           {/* BADGES */}
 
-          <div
-            className="
-              absolute
-              top-3
-              left-3
-              flex
-              flex-col
-              gap-2
-              z-10
-            "
-          >
+          <div className="absolute top-2 left-2 flex flex-col gap-1.5 z-10">
 
             {producto.nuevo && (
-
-              <span
-                className="
-    text-[10px]
-    px-2.5
-    py-1
-    rounded-full
-    font-medium
-    bg-accent
-    text-black
-    shadow-sm
-    tracking-wide
-  "
-              >
+              <span className="text-[9px] px-2 py-0.5 rounded-full font-medium bg-accent text-black shadow-sm">
                 Nuevo
               </span>
+            )}
 
+            {producto.masVendido && (
+              <span className="text-[9px] px-2 py-0.5 rounded-full font-medium bg-yellow-400 text-black">
+                🔥 Top
+              </span>
             )}
 
             {producto.pocoStock && (
-
-              <span
-                className="
-                  text-[10px]
-                  px-2.5
-                  py-1
-                  rounded-full
-                  font-medium
-                  bg-red-500
-                  text-white
-                "
-              >
-                ⚡ Poco stock
+              <span className="text-[9px] px-2 py-0.5 rounded-full font-medium bg-red-500 text-white">
+                ⚡ Stock bajo
               </span>
-
             )}
 
             {!producto.disponible && (
-
-              <span
-                className="
-                  text-[10px]
-                  px-2.5
-                  py-1
-                  rounded-full
-                  font-medium
-                  bg-white/10
-                  text-text
-                  border
-                  border-border
-                  backdrop-blur
-                "
-              >
+              <span className="text-[9px] px-2 py-0.5 rounded-full font-medium bg-white/10 text-text border border-border backdrop-blur">
                 Sin stock
               </span>
-
             )}
 
           </div>
@@ -137,32 +93,13 @@ export function PerfumeCard({ producto }: PerfumeCardProps) {
 
               {/* OVERLAY */}
 
-              <div
-                className="
-                  absolute
-                  inset-0
-                  bg-gradient-to-t
-                  from-black/40
-                  via-black/10
-                  to-transparent
-                  pointer-events-none
-                "
-              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent pointer-events-none" />
 
             </>
 
           ) : (
 
-            <div
-              className="
-                flex
-                items-center
-                justify-center
-                h-full
-                text-muted
-                text-sm
-              "
-            >
+            <div className="flex items-center justify-center h-full text-muted text-xs">
               Sin imagen
             </div>
 
@@ -173,18 +110,11 @@ export function PerfumeCard({ producto }: PerfumeCardProps) {
 
         {/* CONTENIDO */}
 
-        <div className="p-5 space-y-2">
+        <div className="p-3 sm:p-4 space-y-1.5">
 
           {/* MARCA */}
 
-          <p
-            className="
-              text-[11px]
-              tracking-[0.2em]
-              uppercase
-              text-muted
-            "
-          >
+          <p className="text-[10px] tracking-[0.2em] uppercase text-muted">
             {producto.marca}
           </p>
 
@@ -194,9 +124,11 @@ export function PerfumeCard({ producto }: PerfumeCardProps) {
           <h3
             className="
               font-serif
-              text-lg
+              text-sm
+              sm:text-base
               leading-tight
               text-text
+              line-clamp-2
               group-hover:text-accent
               transition-colors
             "
@@ -207,13 +139,7 @@ export function PerfumeCard({ producto }: PerfumeCardProps) {
 
           {/* PRECIO */}
 
-          <p
-            className="
-              text-accent
-              font-semibold
-              pt-2
-            "
-          >
+          <p className="text-accent font-semibold text-sm sm:text-base pt-1">
 
             {disponible
               ? `Desde $${producto.precioDesde.toLocaleString()}`
