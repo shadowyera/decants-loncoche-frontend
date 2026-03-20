@@ -4,6 +4,7 @@
  * ==========================================
  */
 
+// VALUE (para usar ESTADO_PEDIDO.PENDIENTE)
 export const ESTADO_PEDIDO = {
   PENDIENTE: "PENDIENTE",
   EN_PROCESO: "EN_PROCESO",
@@ -11,8 +12,12 @@ export const ESTADO_PEDIDO = {
   CANCELADO: "CANCELADO"
 } as const
 
-export type EstadoPedido =
+// TYPE LEGACY (para tu código actual)
+export type ESTADO_PEDIDO =
   (typeof ESTADO_PEDIDO)[keyof typeof ESTADO_PEDIDO]
+
+// TYPE NUEVO (opcional, más limpio)
+export type EstadoPedido = ESTADO_PEDIDO
 
 
 
@@ -62,7 +67,6 @@ export interface PedidoItem {
  * ==========================================
  * ITEM NORMALIZADO (FRONTEND UI)
  * ==========================================
- * 👉 Esto te evita mapear todo cada vez
  */
 
 export interface PedidoItemUI {
@@ -95,7 +99,7 @@ export interface Pedido {
   items: PedidoItem[]
 
   total: number
-  estado: EstadoPedido
+  estado: ESTADO_PEDIDO
 
   createdAt: string
   updatedAt: string
