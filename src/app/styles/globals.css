@@ -1,0 +1,267 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =====================================================
+   PRIMITIVE TOKENS
+   (colores base, sin semántica)
+   Guardamos H S L como en tu original (sin hsl() alrededor)
+===================================================== */
+
+:root {
+
+  /* neutrals: pensado para dark UI, negros con leve tono cálido */
+  --color-nero-900: 220 10% 4%;
+  /* fondo absoluto */
+  --color-nero-800: 220 12% 7%;
+  --color-charcoal-700: 220 14% 12%;
+  --color-charcoal-600: 220 14% 18%;
+  --color-stone-500: 220 12% 28%;
+
+  /* warm browns (para glows suaves y fondos terciarios) */
+  --color-coffee-600: 30 18% 12%;
+  --color-coffee-500: 32 18% 18%;
+  --color-coffee-400: 32 16% 25%;
+
+  /* gold / amber scale (de claro a profundo) - inspira el metal de la imagen */
+  --color-gold-100: 42 95% 88%;
+  --color-gold-200: 42 85% 70%;
+  --color-gold-300: 42 78% 55%;
+  --color-gold-400: 42 68% 45%;
+  --color-gold-500: 42 60% 36%;
+  --color-gold-600: 40 54% 28%;
+  --color-gold-700: 38 48% 22%;
+  --color-amber-800: 34 60% 18%;
+
+  /* near-white cálido para tipografías sobre el fondo oscuro */
+  --color-warm-white: 40 8% 96%;
+  --color-warm-white-90: 36 7% 90%;
+
+  /* black transparent helpers (RGBA-equivalents but in HSL triplet style for hsl() usage) */
+  --black-opaque: 220 10% 4%;
+}
+
+/* =====================================================
+   METALLIC / GRADIENT TOKENS
+   (valores para gradientes y brillos metálicos)
+===================================================== */
+:root {
+  --metallic-gold-1: 42 80% 58%;
+  --metallic-gold-2: 40 62% 34%;
+  --metallic-gold-3: 36 48% 22%;
+
+  /* stops para gradientes (útiles en backgrounds, borders, rings) */
+  --gold-gradient-stop-a: 42 84% 64%;
+  --gold-gradient-stop-b: 40 66% 36%;
+  --gold-gradient-stop-c: 36 50% 20%;
+}
+
+/* =====================================================
+   SEMANTIC TOKENS (default light-agnostic; .dark sobrescribe)
+===================================================== */
+:root {
+
+  /* background (fallback) */
+  --background: var(--color-nero-900);
+  --surface: var(--color-charcoal-700);
+  --surface-soft: var(--color-charcoal-600);
+  --surface-elevated: var(--color-stone-500);
+
+  /* text */
+  --text: var(--color-warm-white);
+  --text-muted: 40 8% 70%;
+  /* suave, legible sobre oscuro */
+  --text-subtle: 38 8% 56%;
+
+  /* borders */
+  --border: 220 12% 16%;
+  --border-soft: 220 12% 20%;
+
+  /* accent / brand */
+  --accent: var(--color-gold-400);
+  --accent-strong: var(--color-gold-500);
+  --accent-soft: var(--color-gold-300);
+  --accent-hover: var(--color-gold-600);
+
+  /* metallic usage */
+  --metallic-primary: var(--metallic-gold-1);
+  --metallic-secondary: var(--metallic-gold-2);
+
+  /* focus */
+  --focus-ring: var(--color-gold-300);
+
+  /* glow and sparkles (rgba fallback via CSS usage below) */
+  --glow-strong: 212 74% 50%;
+  /* gold hue for generating rgba via hsl() */
+  --glow-soft: 38 80% 55%;
+
+  /* radius */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+
+  /* motion */
+  --ease-premium: cubic-bezier(.22, .61, .36, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 400ms;
+}
+
+/* =====================================================
+   SHADOWS / GLOWS (pensados para dark hero con glow dorado)
+===================================================== */
+:root {
+
+  --shadow-sm:
+    0 1px 2px rgba(0, 0, 0, 0.6),
+    0 1px 1px rgba(0, 0, 0, 0.5);
+
+  --shadow-md:
+    0 12px 36px rgba(0, 0, 0, 0.65),
+    0 6px 20px rgba(0, 0, 0, 0.55);
+
+  --shadow-lg:
+    0 30px 80px rgba(0, 0, 0, 0.75),
+    0 10px 30px rgba(0, 0, 0, 0.65);
+
+  --shadow-xl:
+    0 60px 140px rgba(0, 0, 0, 0.8);
+
+  /* glow dorado para hero / spotlight */
+  --shadow-gold-glow:
+    0 0 18px rgba(212, 175, 55, 0.22),
+    0 0 48px rgba(212, 175, 55, 0.14),
+    inset 0 2px 20px rgba(0, 0, 0, 0.6);
+}
+
+/* =====================================================
+   DARK MODE (sobrescribe tokens para estado .dark)
+   — principal objetivo: UI basada en la imagen que mostraste
+===================================================== */
+
+.dark {
+
+  /* background & surfaces */
+  --background: var(--color-nero-900);
+  /* 220 10% 4% */
+  --surface: var(--color-nero-800);
+  /* 220 12% 7% */
+  --surface-soft: var(--color-coffee-600);
+  /* sutil cálido */
+  --surface-elevated: var(--color-charcoal-700);
+
+  /* text tones (cálidos sobre oscuro) */
+  --text: 40 8% 96%;
+  /* cálido y suave, no puro blanco */
+  --text-muted: 40 8% 72%;
+  --text-subtle: 40 6% 56%;
+
+  /* borders (sutiles para no competir con los brillos) */
+  --border: 220 12% 14%;
+  --border-soft: 220 12% 18%;
+
+  /* accents (usar tonos metálicos y ámbar) */
+  --accent: var(--color-gold-400);
+  /* principal (usable en botones) */
+  --accent-soft: var(--color-gold-300);
+  /* hover/soft */
+  --accent-hover: var(--color-gold-600);
+  --accent-strong: var(--color-gold-500);
+
+  /* focus */
+  --focus-ring: var(--color-gold-300);
+
+  /* shadows más densos en dark */
+  --shadow-sm:
+    0 2px 6px rgba(0, 0, 0, 0.6);
+  --shadow-md:
+    0 18px 48px rgba(0, 0, 0, 0.72);
+  --shadow-lg:
+    0 40px 100px rgba(0, 0, 0, 0.82);
+  --shadow-xl:
+    0 80px 200px rgba(0, 0, 0, 0.9);
+
+  /* glow específico para efectos de partículas/halo */
+  --shadow-glow:
+    0 0 24px rgba(212, 175, 55, 0.32),
+    0 0 60px rgba(212, 175, 55, 0.18);
+
+  /* brillo de pedestal / rim-light */
+  --rim-glow: 40 85% 55%;
+  /* h s l (puedes usar hsl(var(--rim-glow) / 0.16) en CSS) */
+
+  /* metallic gradient (útil para borders, rings y overlay) */
+  --gold-grad-a: var(--gold-gradient-stop-a);
+  --gold-grad-b: var(--gold-gradient-stop-b);
+  --gold-grad-c: var(--gold-gradient-stop-c);
+}
+
+/* =====================================================
+   UTILIDADES DE USO RÁPIDO (ejemplos de cómo aplicar tokens)
+   - No es obligatorio, pero útiles para copiar/pegar
+===================================================== */
+
+/* fondo principal */
+.bg-app {
+  background: hsl(var(--background));
+  color: hsl(var(--text));
+}
+
+/* surface cards */
+.surface {
+  background: linear-gradient(180deg, hsl(var(--surface)) 0%, hsl(var(--surface-soft)) 100%);
+  box-shadow: var(--shadow-md);
+  border-radius: var(--radius-md);
+  border: 1px solid hsl(var(--border) / 0.28);
+}
+
+/* botones primarios */
+.btn-primary {
+  background: linear-gradient(180deg,
+      hsl(var(--gold-grad-a)),
+      hsl(var(--gold-grad-b)));
+  color: hsl(var(--black-opaque));
+  box-shadow: var(--shadow-gold-glow);
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 1rem;
+}
+
+/* outline / focus */
+:focus-visible {
+  outline: 2px solid hsl(var(--focus-ring));
+  outline-offset: 2px;
+}
+
+/* glow utility (ejemplo hero) */
+.hero-glow {
+  box-shadow: 0 0 40px hsl(var(--glow-strong) / 0.18), 0 10px 80px hsl(var(--glow-soft) / 0.08);
+}
+
+/* small metallic border */
+.metallic-ring {
+  border: 1px solid;
+  border-image: linear-gradient(90deg, hsl(var(--metallic-gold-1)), hsl(var(--metallic-gold-2))) 1;
+}
+
+/* selection */
+::selection {
+  background: hsl(var(--accent) / 0.22);
+  color: hsl(var(--text));
+}
+
+.gold-divider {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(to right,
+      transparent,
+      hsl(var(--accent) / 0.6),
+      transparent);
+  opacity: 0.35;
+}
+
+html,
+body {
+  overflow-x: clip;
+}
