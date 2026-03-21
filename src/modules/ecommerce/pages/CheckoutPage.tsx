@@ -243,6 +243,33 @@ export function CheckoutPage() {
               {loading ? "Creando pedido..." : "Confirmar pedido"}
             </Button>
 
+            {/* INFO ENTREGA */}
+
+            <div className="
+              mt-4
+              bg-yellow-500/10
+              border border-yellow-500/30
+              rounded-xl
+              p-4
+              space-y-2
+            ">
+
+              <p className="text-yellow-400 text-sm font-medium text-center md:text-left">
+                ⚠️ Repartos pausados
+              </p>
+
+              <p className="text-muted text-xs sm:text-sm text-center md:text-left">
+                Actualmente los repartos en Loncoche están pausados.
+                <br />
+                Las entregas se realizan en el centro, frente a la plaza de bomberos.
+              </p>
+
+              <div className="text-center md:text-left text-xs sm:text-sm text-text font-medium">
+                📍 Pedro Montt 531, 4970347 Loncoche, Araucanía
+              </div>
+
+            </div>
+
             {/* BENEFICIOS */}
 
             <div className="grid grid-cols-3 gap-3 sm:gap-4 pt-4 text-[10px] sm:text-xs text-muted border-t border-border">
@@ -265,7 +292,6 @@ export function CheckoutPage() {
             </div>
 
           </form>
-
 
           {/* RESUMEN */}
 

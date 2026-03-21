@@ -20,15 +20,10 @@ export function PerfumeCard({ producto }: PerfumeCardProps) {
 
       <Card
         className="
-          group
-          overflow-hidden
-          rounded-2xl
-          bg-surface
-          border border-border/40
-          shadow-sm
-          transition-all duration-300
-          hover:shadow-lg
-          hover:-translate-y-[2px]
+          group overflow-hidden rounded-2xl
+          bg-surface border border-border/40
+          shadow-sm transition-all duration-300
+          hover:shadow-xl hover:-translate-y-[3px]
         "
       >
 
@@ -36,10 +31,9 @@ export function PerfumeCard({ producto }: PerfumeCardProps) {
 
         <div
           className="
-            relative
-            aspect-[4/5]
+            relative aspect-[4/5]
             overflow-hidden
-            bg-black
+            bg-gradient-to-b from-neutral-900 to-black
           "
         >
 
@@ -78,24 +72,20 @@ export function PerfumeCard({ producto }: PerfumeCardProps) {
 
           {producto.imagen ? (
 
-            <>
+            <div className="w-full h-full flex items-center justify-center p-3">
+
               <img
                 src={producto.imagen}
                 alt={producto.nombre}
                 className="
-                  w-full
-                  h-full
-                  object-cover
+                  max-h-full max-w-full
+                  object-contain
                   transition-transform duration-500
                   group-hover:scale-105
                 "
               />
 
-              {/* OVERLAY */}
-
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent pointer-events-none" />
-
-            </>
+            </div>
 
           ) : (
 
@@ -104,6 +94,10 @@ export function PerfumeCard({ producto }: PerfumeCardProps) {
             </div>
 
           )}
+
+          {/* OVERLAY SUTIL */}
+
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
 
         </div>
 
@@ -114,7 +108,7 @@ export function PerfumeCard({ producto }: PerfumeCardProps) {
 
           {/* MARCA */}
 
-          <p className="text-[10px] tracking-[0.2em] uppercase text-muted">
+          <p className="text-[10px] tracking-[0.25em] uppercase text-muted">
             {producto.marca}
           </p>
 
@@ -124,8 +118,7 @@ export function PerfumeCard({ producto }: PerfumeCardProps) {
           <h3
             className="
               font-serif
-              text-sm
-              sm:text-base
+              text-sm sm:text-base
               leading-tight
               text-text
               line-clamp-2

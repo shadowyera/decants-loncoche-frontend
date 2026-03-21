@@ -26,13 +26,11 @@ export function HomePage() {
     <div className="space-y-20 pb-20">
 
       {/* HERO */}
-
       <section className="relative pt-20 pb-10 overflow-hidden">
 
         <Container className="grid grid-cols-1 md:grid-cols-2 items-center gap-10">
 
           {/* TEXTO */}
-
           <div className="space-y-6 text-center md:text-left">
 
             <p className="text-xs tracking-[0.25em] uppercase text-accent">
@@ -40,9 +38,8 @@ export function HomePage() {
             </p>
 
             <h1 className="font-serif text-3xl sm:text-4xl md:text-6xl leading-tight text-text">
-              Descubre nuevas
-              <br className="hidden md:block" />
-              fragancias
+              Descubre nuevas{" "}
+              <span className="block md:inline">fragancias</span>
             </h1>
 
             <p className="text-muted text-sm sm:text-base max-w-md mx-auto md:mx-0">
@@ -62,9 +59,7 @@ export function HomePage() {
 
           </div>
 
-
           {/* PERFUME HERO */}
-
           <div className="relative flex justify-center">
 
             <div className="absolute bottom-4 w-[180px] h-[40px] bg-black/70 blur-3xl rounded-full opacity-60" />
@@ -86,9 +81,7 @@ export function HomePage() {
 
       </section>
 
-
       {/* MÁS VENDIDOS */}
-
       <section>
 
         <Container className="space-y-10">
@@ -109,13 +102,11 @@ export function HomePage() {
 
           </div>
 
-
           {isLoading && (
             <p className="text-center text-muted">
               Cargando perfumes...
             </p>
           )}
-
 
           {!isLoading && masVendidos.length > 0 && (
 
@@ -134,7 +125,6 @@ export function HomePage() {
 
           )}
 
-
           <div className="text-center pt-4">
 
             <Link to="/catalogo">
@@ -149,9 +139,7 @@ export function HomePage() {
 
       </section>
 
-
       {/* BENEFICIOS */}
-
       <section>
 
         <Container>
@@ -175,7 +163,6 @@ export function HomePage() {
 
             </div>
 
-
             <div className="space-y-3">
 
               <Sparkles
@@ -192,7 +179,6 @@ export function HomePage() {
               </p>
 
             </div>
-
 
             <div className="space-y-3">
 

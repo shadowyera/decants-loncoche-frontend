@@ -5,7 +5,6 @@ import { createPortal } from "react-dom"
 import { useNavigate } from "react-router-dom"
 
 import { useCart } from "../hooks/useCart"
-
 import { Button } from "../../../shared/components/ui/Button"
 
 const MAX_PERFUME_DECANTS = 5
@@ -25,35 +24,16 @@ export function CartDrawer() {
 
   const totalPrice = total()
 
-  /**
-   * BLOQUEAR SCROLL CUANDO EL DRAWER ESTÁ ABIERTO
-   */
-
   useEffect(() => {
-
-    if (isOpen) {
-      document.body.style.overflow = "hidden"
-    } else {
-      document.body.style.overflow = ""
-    }
-
-    return () => {
-      document.body.style.overflow = ""
-    }
-
+    document.body.style.overflow = isOpen ? "hidden" : ""
+    return () => { document.body.style.overflow = "" }
   }, [isOpen])
 
-
   function handleCheckout() {
-
     if (items.length === 0) return
-
     closeCart()
-
     navigate("/checkout")
-
   }
-
 
   return createPortal(
 
@@ -62,9 +42,7 @@ export function CartDrawer() {
       {isOpen && (
 
         <>
-
           {/* BACKDROP */}
-
           <motion.div
             className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40"
             initial={{ opacity: 0 }}
@@ -74,35 +52,21 @@ export function CartDrawer() {
           />
 
           {/* DRAWER */}
-
           <motion.div
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 26, stiffness: 260 }}
             className="
-              fixed
-              right-0
-              top-0
-              h-dvh
-              w-[380px]
-              bg-background
-              border-l
-              border-border
-              z-50
-              flex
-              flex-col
-              text-text
+              fixed right-0 top-0 h-dvh w-[380px]
+              bg-background border-l border-border z-50
+              flex flex-col text-text
             "
           >
 
             {/* HEADER */}
-
             <div className="flex items-center justify-between p-6 border-b border-border">
-
-              <h2 className="font-serif text-xl">
-                Carrito
-              </h2>
+              <h2 className="font-serif text-xl">Carrito</h2>
 
               <button
                 onClick={closeCart}
@@ -110,20 +74,15 @@ export function CartDrawer() {
               >
                 <X size={20} />
               </button>
-
             </div>
 
-
             {/* ITEMS */}
-
             <div className="flex-1 overflow-y-auto p-6 space-y-5">
 
               {items.length === 0 && (
-
                 <p className="text-muted text-center mt-10">
                   Tu carrito está vacío
                 </p>
-
               )}
 
               {items.map((item) => {
@@ -141,32 +100,35 @@ export function CartDrawer() {
                   <div
                     key={item.decantId}
                     className="
-                      flex
-                      gap-4
-                      p-4
-                      rounded-xl
-                      bg-white/5
-                      border
-                      border-border
+                      flex gap-4 p-4 rounded-xl
+                      bg-white/5 border border-border
+                      backdrop-blur-sm
                     "
                   >
 
-                    {/* IMAGE */}
-
+                    {/* IMAGE PRO 🔥 */}
                     {item.perfumeImagen && (
-
-                      <img
-                        src={item.perfumeImagen}
-                        className="w-16 h-16 object-contain"
-                      />
-
+                      <div className="
+                        w-16 h-16 rounded-lg
+                        bg-gradient-to-b from-neutral-900 to-black
+                        flex items-center justify-center
+                        overflow-hidden
+                      ">
+                        <img
+                          src={item.perfumeImagen}
+                          className="
+                            w-full h-full
+                            object-contain p-2
+                            drop-shadow-[0_6px_12px_rgba(0,0,0,0.8)]
+                          "
+                        />
+                      </div>
                     )}
 
                     {/* INFO */}
-
                     <div className="flex-1">
 
-                      <p className="text-sm font-medium">
+                      <p className="text-sm font-medium leading-tight">
                         {item.perfumeNombre}
                       </p>
 
@@ -179,7 +141,6 @@ export function CartDrawer() {
                       </p>
 
                       {/* CONTROLES */}
-
                       <div className="flex items-center gap-3 mt-3">
 
                         <button
@@ -187,13 +148,9 @@ export function CartDrawer() {
                             updateCantidad(item.decantId, item.cantidad - 1)
                           }
                           className="
-                            w-7 h-7
-                            flex
-                            items-center
-                            justify-center
-                            rounded-md
-                            bg-surface
-                            hover:bg-surface-soft
+                            w-7 h-7 flex items-center justify-center
+                            rounded-md bg-surface
+                            hover:bg-surface-soft transition
                           "
                         >
                           <Minus size={14} />
@@ -209,13 +166,9 @@ export function CartDrawer() {
                             updateCantidad(item.decantId, item.cantidad + 1)
                           }
                           className="
-                            w-7 h-7
-                            flex
-                            items-center
-                            justify-center
-                            rounded-md
-                            bg-surface
-                            hover:bg-surface-soft
+                            w-7 h-7 flex items-center justify-center
+                            rounded-md bg-surface
+                            hover:bg-surface-soft transition
                             disabled:opacity-40
                             disabled:cursor-not-allowed
                           "
@@ -233,14 +186,12 @@ export function CartDrawer() {
 
                     </div>
 
-
                     {/* SUBTOTAL */}
-
                     <div className="flex flex-col items-end justify-between">
 
                       <button
                         onClick={() => removeItem(item.decantId)}
-                        className="text-muted hover:text-red-500"
+                        className="text-muted hover:text-red-500 transition"
                       >
                         <Trash2 size={16} />
                       </button>
@@ -259,19 +210,12 @@ export function CartDrawer() {
 
             </div>
 
-
             {/* FOOTER */}
-
             <div className="border-t border-border p-6 space-y-4">
 
               <div className="flex justify-between text-lg font-medium">
-
                 <span>Total</span>
-
-                <span>
-                  ${totalPrice.toLocaleString()}
-                </span>
-
+                <span>${totalPrice.toLocaleString()}</span>
               </div>
 
               <Button
@@ -286,15 +230,11 @@ export function CartDrawer() {
             </div>
 
           </motion.div>
-
         </>
-
       )}
 
     </AnimatePresence>,
 
     document.body
-
   )
-
 }
