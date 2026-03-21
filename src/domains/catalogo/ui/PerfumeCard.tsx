@@ -7,9 +7,29 @@ interface PerfumeCardProps {
   producto: CatalogoProducto
 }
 
+const LOW_STOCK_THRESHOLD = 5
+
 export function PerfumeCard({ producto }: PerfumeCardProps) {
 
   const disponible = producto.disponible && producto.precioDesde > 0
+
+  const stock =
+    "stock" in producto && typeof producto.stock === "number"
+      ? producto.stock
+      : undefined
+
+  const isOutOfStock =
+    !producto.disponible || (stock !== undefined && stock === 0)
+
+  const isLowStock =
+    !isOutOfStock &&
+    (stock !== undefined
+      ? stock <= LOW_STOCK_THRESHOLD
+      : producto.pocoStock)
+
+  // 🎨 base común de badges (clave para que todo se vea uniforme)
+  const badgeBase =
+    "text-[11px] font-semibold px-3 py-1.5 rounded-full shadow-sm backdrop-blur border"
 
   return (
 
@@ -29,50 +49,48 @@ export function PerfumeCard({ producto }: PerfumeCardProps) {
 
         {/* IMAGEN */}
 
-        <div
-          className="
-            relative aspect-[4/5]
-            overflow-hidden
-            bg-gradient-to-b from-neutral-900 to-black
-          "
-        >
+        <div className="relative aspect-[4/5] overflow-hidden bg-gradient-to-b from-neutral-900 to-black">
 
           {/* BADGES */}
 
-          <div className="absolute top-2 left-2 flex flex-col gap-1.5 z-10">
+          <div className="absolute top-3 left-3 flex flex-col gap-2 z-10">
+
+            {isOutOfStock && (
+              <span className={`${badgeBase} bg-zinc-600/80 text-white border-white/10`}>
+                Sin stock
+              </span>
+            )}
+
+            {!isOutOfStock && isLowStock && (
+              <span className={`${badgeBase} bg-red-500/80 text-white border-white/10`}>
+                {stock !== undefined
+                  ? stock === 1
+                    ? "Queda 1 unidad"
+                    : `Quedan ${stock} unidades`
+                  : "Quedan pocos"}
+              </span>
+            )}
 
             {producto.nuevo && (
-              <span className="text-[9px] px-2 py-0.5 rounded-full font-medium bg-accent text-black shadow-sm">
+              <span className={`${badgeBase} bg-accent/90 text-white border-white/10`}>
                 Nuevo
               </span>
             )}
 
             {producto.masVendido && (
-              <span className="text-[9px] px-2 py-0.5 rounded-full font-medium bg-yellow-400 text-black">
+              <span className={`${badgeBase} bg-yellow-400/90 text-black border-white/10`}>
                 🔥 Top
-              </span>
-            )}
-
-            {producto.pocoStock && (
-              <span className="text-[9px] px-2 py-0.5 rounded-full font-medium bg-red-500 text-white">
-                ⚡ Stock bajo
-              </span>
-            )}
-
-            {!producto.disponible && (
-              <span className="text-[9px] px-2 py-0.5 rounded-full font-medium bg-white/10 text-text border border-border backdrop-blur">
-                Sin stock
               </span>
             )}
 
           </div>
 
 
-          {/* IMAGEN PERFUME */}
+          {/* IMAGEN */}
 
           {producto.imagen ? (
 
-            <div className="w-full h-full flex items-center justify-center p-3">
+            <div className="w-full h-full flex items-center justify-center p-4">
 
               <img
                 src={producto.imagen}
@@ -95,7 +113,7 @@ export function PerfumeCard({ producto }: PerfumeCardProps) {
 
           )}
 
-          {/* OVERLAY SUTIL */}
+          {/* OVERLAY */}
 
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
 
@@ -135,7 +153,7 @@ export function PerfumeCard({ producto }: PerfumeCardProps) {
           <p className="text-accent font-semibold text-sm sm:text-base pt-1">
 
             {disponible
-              ? `Desde $${producto.precioDesde.toLocaleString()}`
+              ? `Desde $${producto.precioDesde.toLocaleString("es-CL")}`
               : "Próximamente"}
 
           </p>
