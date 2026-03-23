@@ -1,5 +1,4 @@
 import { Loader2 } from "lucide-react"
-
 import { Button } from "../../../../shared/components/ui/Button"
 
 import type { Perfume } from "../../../../domains/perfume/domain/perfume.types"
@@ -30,7 +29,7 @@ interface Props {
 const inputClass = `
 w-full
 px-4
-py-2
+py-3
 rounded-md
 bg-background
 border
@@ -74,35 +73,54 @@ export default function AdminPerfumeFormModal({
 
   return (
 
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center">
 
+      {/* BACKDROP */}
       <div
         className="absolute inset-0 bg-black/70"
         onClick={onClose}
       />
 
-      <div className="relative bg-surface border border-border rounded-xl p-10 w-full max-w-5xl">
+      {/* MODAL */}
+      <div className="
+        relative
+        w-full
+        sm:max-w-5xl
 
-        <h3 className="text-xl font-semibold mb-6">
+        bg-surface
+        border border-border
+
+        rounded-t-2xl sm:rounded-xl
+
+        p-4 sm:p-8
+
+        max-h-[95vh]
+        overflow-y-auto
+
+        pb-[env(safe-area-inset-bottom)]
+      ">
+
+        {/* HANDLE MOBILE */}
+        <div className="w-10 h-1.5 bg-border rounded-full mx-auto mb-4 sm:hidden" />
+
+        <h3 className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6">
           {editing ? "Editar perfume" : "Crear perfume"}
         </h3>
 
         <form
           onSubmit={onSubmit}
-          className="grid grid-cols-2 gap-8"
+          className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8"
         >
 
-          {/* COLUMNA IZQUIERDA */}
-
+          {/* IZQUIERDA */}
           <div className="space-y-4">
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
               <div>
                 <label className={labelClass}>Marca</label>
                 <input
                   className={inputClass}
-                  placeholder="Montblanc"
                   value={form.marca}
                   onChange={e => update("marca", e.target.value)}
                   required
@@ -113,7 +131,6 @@ export default function AdminPerfumeFormModal({
                 <label className={labelClass}>Nombre</label>
                 <input
                   className={inputClass}
-                  placeholder="Starwalker"
                   value={form.nombre}
                   onChange={e => update("nombre", e.target.value)}
                   required
@@ -122,35 +139,29 @@ export default function AdminPerfumeFormModal({
 
             </div>
 
-
             <div>
               <label className={labelClass}>Descripción</label>
               <textarea
                 className={inputClass}
-                placeholder="Descripción corta"
                 value={form.descripcion}
                 onChange={e => update("descripcion", e.target.value)}
               />
             </div>
 
-
             <div>
               <label className={labelClass}>Notas</label>
               <input
                 className={inputClass}
-                placeholder="bergamota, cedro, almizcle"
                 value={form.notas}
                 onChange={e => update("notas", e.target.value)}
               />
               <p className={hintClass}>Separar por comas</p>
             </div>
 
-
             <div>
               <label className={labelClass}>Familias olfativas</label>
               <input
                 className={inputClass}
-                placeholder="cítrico, fresco"
                 value={form.familiasOlfativas}
                 onChange={e => update("familiasOlfativas", e.target.value)}
               />
@@ -160,38 +171,28 @@ export default function AdminPerfumeFormModal({
           </div>
 
 
-          {/* COLUMNA DERECHA */}
-
+          {/* DERECHA */}
           <div className="space-y-6">
 
             <div>
               <label className={labelClass}>Imagen</label>
               <input
                 className={inputClass}
-                placeholder="/uploads/perfumes/montblanc.png"
                 value={form.imagen}
                 onChange={e => update("imagen", e.target.value)}
               />
-              <p className={hintClass}>
-                Ruta de la imagen
-              </p>
+              <p className={hintClass}>Ruta de la imagen</p>
             </div>
 
-
             {form.imagen && (
-
               <div className="flex justify-center">
-
                 <img
                   src={form.imagen}
-                  alt="Preview perfume"
-                  className="h-32 object-contain"
+                  alt="Preview"
+                  className="h-28 sm:h-32 object-contain"
                 />
-
               </div>
-
             )}
-
 
             <div className="border border-border rounded-lg p-4 space-y-4">
 
@@ -199,14 +200,10 @@ export default function AdminPerfumeFormModal({
                 Datos botella
               </h4>
 
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
 
                 <div>
-
-                  <label className={labelClass}>
-                    Precio botella
-                  </label>
-
+                  <label className={labelClass}>Precio botella</label>
                   <input
                     className={inputClass}
                     type="number"
@@ -215,20 +212,10 @@ export default function AdminPerfumeFormModal({
                       update("precioBotella", Number(e.target.value))
                     }
                   />
-
-                  <p className={hintClass}>
-                    Precio que pagaste
-                  </p>
-
                 </div>
 
-
                 <div>
-
-                  <label className={labelClass}>
-                    ML botella
-                  </label>
-
+                  <label className={labelClass}>ML botella</label>
                   <input
                     className={inputClass}
                     type="number"
@@ -237,20 +224,10 @@ export default function AdminPerfumeFormModal({
                       update("mlBotella", Number(e.target.value))
                     }
                   />
-
-                  <p className={hintClass}>
-                    Tamaño total
-                  </p>
-
                 </div>
 
-
                 <div>
-
-                  <label className={labelClass}>
-                    Multiplicador
-                  </label>
-
+                  <label className={labelClass}>Multiplicador</label>
                   <input
                     className={inputClass}
                     type="number"
@@ -260,11 +237,6 @@ export default function AdminPerfumeFormModal({
                       update("multiplicadorDecant", Number(e.target.value))
                     }
                   />
-
-                  <p className={hintClass}>
-                    Margen aplicado
-                  </p>
-
                 </div>
 
               </div>
@@ -274,14 +246,24 @@ export default function AdminPerfumeFormModal({
           </div>
 
 
-          {/* BOTONES */}
+          {/* ACTIONS */}
+          <div className="
+            col-span-1 sm:col-span-2
 
-          <div className="col-span-2 flex justify-end gap-3 pt-4">
+            sticky bottom-0
+            bg-surface
+
+            pt-4 mt-4
+
+            flex flex-col sm:flex-row
+            gap-2 sm:gap-3
+          ">
 
             <Button
               variant="ghost"
               type="button"
               onClick={onClose}
+              className="w-full"
             >
               Cancelar
             </Button>
@@ -289,8 +271,8 @@ export default function AdminPerfumeFormModal({
             <Button
               type="submit"
               disabled={loading}
+              className="w-full flex items-center justify-center"
             >
-
               {loading ? (
                 <Loader2 className="animate-spin" />
               ) : editing ? (
@@ -298,7 +280,6 @@ export default function AdminPerfumeFormModal({
               ) : (
                 "Crear perfume"
               )}
-
             </Button>
 
           </div>

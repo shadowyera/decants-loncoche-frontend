@@ -5,55 +5,64 @@ import type {
   ESTADO_PEDIDO
 } from "../../../../domains/pedido/domain/pedido.types"
 
-
 interface Props {
-
   pedido: Pedido
-
   onClose: () => void
-
   onIniciar: (id: string) => void
   onConfirmar: (id: string) => void
   onCancelar: (id: string) => void
-
 }
 
-
 export default function AdminPedidoDetailModal({
-
   pedido,
   onClose,
   onIniciar,
   onConfirmar,
   onCancelar
-
 }: Props) {
 
   const estado = pedido.estado as ESTADO_PEDIDO
 
   return (
 
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center">
 
+      {/* BACKDROP */}
       <div
-        className="
-          bg-surface
-          border border-border
-          rounded-xl
-          w-full max-w-xl
-          p-6
-          space-y-6
-          shadow-xl
-        "
-      >
+        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+        onClick={onClose}
+      />
+
+      {/* MODAL */}
+      <div className="
+        relative
+        w-full
+        sm:max-w-xl
+
+        bg-surface
+        border border-border
+
+        rounded-t-2xl sm:rounded-xl
+
+        p-4 sm:p-6
+
+        max-h-[90vh]
+        overflow-y-auto
+
+        pb-[env(safe-area-inset-bottom)]
+
+        space-y-6
+      ">
+
+        {/* HANDLE */}
+        <div className="w-10 h-1.5 bg-border rounded-full mx-auto sm:hidden" />
 
         {/* HEADER */}
+        <div className="flex justify-between items-start gap-3">
 
-        <div className="flex justify-between items-start">
+          <div className="space-y-1">
 
-          <div>
-
-            <h2 className="text-lg font-semibold">
+            <h2 className="text-base sm:text-lg font-semibold">
               Pedido {pedido.numeroPedido}
             </h2>
 
@@ -69,7 +78,6 @@ export default function AdminPedidoDetailModal({
 
 
         {/* CLIENTE */}
-
         <div className="space-y-2">
 
           <p className="text-sm font-semibold text-muted">
@@ -98,14 +106,13 @@ export default function AdminPedidoDetailModal({
 
 
         {/* PRODUCTOS */}
-
         <div className="space-y-3">
 
           <p className="text-sm font-semibold text-muted">
             Productos
           </p>
 
-          <div className="border border-border rounded-lg overflow-hidden">
+          <div className="space-y-2">
 
             {pedido.items.map((item, i) => {
 
@@ -117,28 +124,33 @@ export default function AdminPedidoDetailModal({
                 <div
                   key={i}
                   className="
-                    flex justify-between
-                    px-4 py-3
-                    border-b border-border
-                    last:border-0
+                    bg-background
+                    border border-border
+                    rounded-lg
+                    p-3
+                    space-y-2
                   "
                 >
 
-                  <div>
+                  <div className="flex justify-between gap-2">
 
-                    <p className="font-medium">
-                      {perfume.marca} {perfume.nombre}
-                    </p>
+                    <div>
 
-                    <p className="text-xs text-muted">
-                      {decant.ml}ml × {item.cantidad}
+                      <p className="font-medium text-sm">
+                        {perfume.marca} {perfume.nombre}
+                      </p>
+
+                      <p className="text-xs text-muted">
+                        {decant.ml}ml × {item.cantidad}
+                      </p>
+
+                    </div>
+
+                    <p className="font-medium text-sm whitespace-nowrap">
+                      ${(item.precioUnitario * item.cantidad).toLocaleString()}
                     </p>
 
                   </div>
-
-                  <p className="font-medium">
-                    ${(item.precioUnitario * item.cantidad).toLocaleString()}
-                  </p>
 
                 </div>
 
@@ -152,8 +164,10 @@ export default function AdminPedidoDetailModal({
 
 
         {/* TOTAL */}
-
-        <div className="flex justify-between pt-4 border-t border-border">
+        <div className="
+          flex justify-between items-center
+          pt-4 border-t border-border
+        ">
 
           <span className="text-muted text-sm">
             Total
@@ -167,28 +181,34 @@ export default function AdminPedidoDetailModal({
 
 
         {/* ACTIONS */}
+        <div className="
+          sticky bottom-0
+          bg-surface
+          pt-4
 
-        <div className="flex items-center justify-between pt-2">
-
-          {/* LEFT */}
+          flex flex-col sm:flex-row
+          gap-2 sm:justify-between
+        ">
 
           <Button
             variant="ghost"
             onClick={onClose}
+            className="w-full sm:w-auto"
           >
             Cerrar
           </Button>
 
-
-          {/* RIGHT */}
-
-          <div className="flex items-center gap-3">
+          <div className="
+            flex flex-col sm:flex-row
+            gap-2 sm:gap-3
+            w-full sm:w-auto
+          ">
 
             {estado === "PENDIENTE" && (
-
               <>
                 <Button
                   onClick={() => onIniciar(pedido._id)}
+                  className="w-full sm:w-auto"
                 >
                   Iniciar pedido
                 </Button>
@@ -200,20 +220,20 @@ export default function AdminPedidoDetailModal({
                     text-red-500
                     hover:text-red-400
                     transition
+                    w-full sm:w-auto
+                    text-center
                   "
                 >
                   Cancelar
                 </button>
               </>
-
             )}
 
-
             {estado === "EN_PROCESO" && (
-
               <>
                 <Button
                   onClick={() => onConfirmar(pedido._id)}
+                  className="w-full sm:w-auto"
                 >
                   Confirmar pago
                 </Button>
@@ -225,12 +245,13 @@ export default function AdminPedidoDetailModal({
                     text-red-500
                     hover:text-red-400
                     transition
+                    w-full sm:w-auto
+                    text-center
                   "
                 >
                   Cancelar
                 </button>
               </>
-
             )}
 
           </div>
@@ -246,9 +267,7 @@ export default function AdminPedidoDetailModal({
 }
 
 
-/* ========================================
-   BADGE
-======================================== */
+/* BADGE */
 
 function EstadoBadge({
   estado
@@ -257,32 +276,22 @@ function EstadoBadge({
 }) {
 
   const estilos = {
-
-    PENDIENTE:
-      "bg-yellow-500/10 text-yellow-500",
-
-    EN_PROCESO:
-      "bg-blue-500/10 text-blue-500",
-
-    PAGADO:
-      "bg-green-500/10 text-green-500",
-
-    CANCELADO:
-      "bg-red-500/10 text-red-500"
-
+    PENDIENTE: "bg-yellow-500/10 text-yellow-500",
+    EN_PROCESO: "bg-blue-500/10 text-blue-500",
+    PAGADO: "bg-green-500/10 text-green-500",
+    CANCELADO: "bg-red-500/10 text-red-500"
   }
 
   return (
-
     <span
       className={`
         text-xs px-2 py-1 rounded-md
+        whitespace-nowrap
         ${estilos[estado]}
       `}
     >
       {estado}
     </span>
-
   )
 
 }

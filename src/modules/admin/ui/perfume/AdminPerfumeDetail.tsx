@@ -18,14 +18,11 @@ import type { PerfumeDetalleAdmin } from "../../../../domains/perfume/domain/per
 
 interface Props {
   detalle: PerfumeDetalleAdmin | null
-
   onEdit: (perfume: Perfume) => void
   onToggle: (id: string) => void
-
   onStockUpdate: (id: string, stock: number) => void
   onPrecioUpdate: (id: string, precio: number) => void
   onToggleDecant: (id: string) => void
-
   onCreateDecant: () => void
 }
 
@@ -53,7 +50,7 @@ export default function AdminPerfumeDetail({
   const multiplicador = perfume?.multiplicadorDecant ?? 1
 
   /* ===============================
-     CALCULOS NEGOCIO
+     CALCULOS
   =============================== */
 
   const costoMl =
@@ -73,9 +70,8 @@ export default function AdminPerfumeDetail({
       ? ((precioMl - costoMl) / costoMl) * 100
       : 0
 
-
   /* ===============================
-     ML RESERVADOS
+     ML
   =============================== */
 
   const mlReservados = useMemo(() => {
@@ -101,9 +97,8 @@ export default function AdminPerfumeDetail({
   const mlUsados =
     mlBotella - mlDisponiblesReal
 
-
   /* ===============================
-     VALORES ECONOMICOS
+     ECONOMIA
   =============================== */
 
   const valorRestante = useMemo(() => {
@@ -121,7 +116,6 @@ export default function AdminPerfumeDetail({
 
   }, [decants, mlDisponiblesReal])
 
-
   const valorMaximoBotella = useMemo(() => {
 
     return decants.reduce((total, d) => {
@@ -137,7 +131,6 @@ export default function AdminPerfumeDetail({
 
   }, [decants, mlBotella])
 
-
   /* ===============================
      WARNING
   =============================== */
@@ -145,9 +138,8 @@ export default function AdminPerfumeDetail({
   const lowMlWarning =
     mlDisponiblesReal > 0 && mlDisponiblesReal <= 10
 
-
   /* ===============================
-     RECALCULAR PRECIOS
+     RECALCULAR
   =============================== */
 
   function handleRecalcularPrecios() {
@@ -155,10 +147,7 @@ export default function AdminPerfumeDetail({
     if (!perfume) return
 
     const nuevosPrecios =
-      recalcularPreciosDecants(
-        perfume,
-        decants
-      )
+      recalcularPreciosDecants(perfume, decants)
 
     Object.entries(nuevosPrecios)
       .forEach(([id, precio]) => {
@@ -174,11 +163,10 @@ export default function AdminPerfumeDetail({
 
   }
 
-
   if (!detalle || !perfume) {
 
     return (
-      <div className="p-10 text-center text-muted border border-border rounded-lg bg-surface">
+      <div className="p-6 text-center text-muted border border-border rounded-lg bg-surface">
         Selecciona un perfume para ver detalles
       </div>
     )
@@ -187,30 +175,29 @@ export default function AdminPerfumeDetail({
 
   return (
 
-    <div className="p-6 space-y-6 border border-border rounded-xl bg-surface">
+    <div className="p-4 sm:p-6 space-y-6 border border-border rounded-xl bg-surface">
 
       {/* HEADER */}
-
-      <div className="flex items-center justify-between">
+      <div className="
+        flex flex-col sm:flex-row
+        sm:items-center
+        justify-between
+        gap-4
+      ">
 
         <div className="space-y-1">
 
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-2">
 
-            <h2 className="text-xl font-semibold text-text whitespace-nowrap">
+            <h2 className="text-lg sm:text-xl font-semibold text-text">
               {perfume.nombre}
             </h2>
 
             {lowMlWarning && (
-
-              <div className="flex items-center gap-1 text-yellow-400 text-xs bg-yellow-400/10 px-2 py-1 rounded-md border border-yellow-400/20 whitespace-nowrap">
-
+              <div className="flex items-center gap-1 text-yellow-400 text-xs bg-yellow-400/10 px-2 py-1 rounded-md border border-yellow-400/20">
                 <AlertTriangle size={14} />
-
-                {mlDisponiblesReal}ml restantes
-
+                {mlDisponiblesReal}ml
               </div>
-
             )}
 
           </div>
@@ -221,26 +208,33 @@ export default function AdminPerfumeDetail({
 
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="
+          flex flex-col sm:flex-row
+          gap-2 sm:gap-4
+          w-full sm:w-auto
+        ">
 
           <Button
             size="sm"
             variant="secondary"
             onClick={() => onEdit(perfume)}
-            className="flex items-center gap-2"
+            className="flex items-center justify-center gap-2 w-full sm:w-auto"
           >
             <Edit3 size={14} />
             Editar
           </Button>
 
-          <div className="flex items-center gap-2 w-[110px] justify-between">
+          <div className="
+            flex items-center justify-between
+            w-full sm:w-[140px]
+          ">
 
             <Switch
               checked={perfume.activo}
               onChange={() => onToggle(perfume._id)}
             />
 
-            <span className="text-sm text-muted w-[60px] text-right">
+            <span className="text-sm text-muted">
               {perfume.activo ? "Activo" : "Inactivo"}
             </span>
 
@@ -252,62 +246,28 @@ export default function AdminPerfumeDetail({
 
 
       {/* METRICAS */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
 
-      <div className="grid grid-cols-4 gap-4">
-
-        <Metric
-          label="Botella"
-          value={`${mlBotella} ml`}
-        />
-
-        <Metric
-          label="Disponible"
-          value={`${mlDisponiblesReal} ml`}
-        />
-
-        <Metric
-          label="Valor restante"
-          value={`$${valorRestante.toLocaleString()}`}
-          accent
-        />
-
-        <Metric
-          label="Valor máximo"
-          value={`$${valorMaximoBotella.toLocaleString()}`}
-          success
-        />
+        <Metric label="Botella" value={`${mlBotella} ml`} />
+        <Metric label="Disponible" value={`${mlDisponiblesReal} ml`} />
+        <Metric label="Valor restante" value={`$${valorRestante.toLocaleString()}`} accent />
+        <Metric label="Valor máximo" value={`$${valorMaximoBotella.toLocaleString()}`} success />
 
       </div>
 
 
-      {/* METRICAS NEGOCIO */}
+      {/* NEGOCIO */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
 
-      <div className="grid grid-cols-3 gap-4">
-
-        <Metric
-          label="Costo por ml"
-          value={`$${Math.round(costoMl).toLocaleString()}`}
-        />
-
-        <Metric
-          label="Precio por ml"
-          value={`$${precioMl.toLocaleString()}`}
-          accent
-        />
-
-        <Metric
-          label="Margen"
-          value={`${Math.round(margen)}%`}
-          success
-        />
+        <Metric label="Costo/ml" value={`$${Math.round(costoMl).toLocaleString()}`} />
+        <Metric label="Precio/ml" value={`$${precioMl.toLocaleString()}`} accent />
+        <Metric label="Margen" value={`${Math.round(margen)}%`} success />
 
       </div>
 
 
-      {/* BARRA CONSUMO */}
-
+      {/* CONSUMO */}
       <div>
-
         <ConsumptionBar
           mlTotales={mlBotella}
           mlDisponibles={mlDisponiblesReal}
@@ -316,17 +276,20 @@ export default function AdminPerfumeDetail({
         <div className="text-xs text-muted text-right mt-1">
           {mlUsados} / {mlBotella} ml usados
         </div>
-
       </div>
 
 
       {/* DECANTS */}
-
       <div>
 
-        <div className="flex items-center justify-between mb-3">
+        <div className="
+          flex flex-col sm:flex-row
+          sm:items-center
+          justify-between
+          gap-3 mb-3
+        ">
 
-          <div className="flex items-center gap-3">
+          <div className="flex flex-col sm:flex-row gap-2 sm:items-center">
 
             <h3 className="font-semibold text-text">
               Decants
@@ -336,6 +299,7 @@ export default function AdminPerfumeDetail({
               size="sm"
               variant="secondary"
               onClick={handleRecalcularPrecios}
+              className="w-full sm:w-auto"
             >
               Recalcular precios
             </Button>
@@ -345,6 +309,7 @@ export default function AdminPerfumeDetail({
           <Button
             size="sm"
             onClick={onCreateDecant}
+            className="w-full sm:w-auto"
           >
             + Crear decant
           </Button>
@@ -377,8 +342,7 @@ export default function AdminPerfumeDetail({
 }
 
 
-/* METRIC CARD */
-
+/* METRIC */
 function Metric({
   label,
   value,
@@ -393,14 +357,19 @@ function Metric({
 
   return (
 
-    <div className="p-4 rounded-lg border border-border bg-background">
+    <div className="
+      p-3 sm:p-4
+      rounded-lg
+      border border-border
+      bg-background
+    ">
 
       <p className="text-xs text-muted mb-1">
         {label}
       </p>
 
       <p
-        className={`text-lg font-semibold ${
+        className={`text-base sm:text-lg font-semibold ${
           accent
             ? "text-accent"
             : success

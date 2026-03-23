@@ -16,7 +16,7 @@ export default function DecantCapacityMeter({
 
   return (
 
-    <div className="space-y-2">
+    <div className="space-y-3">
 
       <p className="text-xs text-muted">
         Capacidad máxima de decants por botella
@@ -30,27 +30,39 @@ export default function DecantCapacityMeter({
 
           <div
             key={d._id}
-            className="flex items-center justify-between text-sm"
+            className="
+              bg-background
+              border border-border
+              rounded-lg
+              p-3
+              space-y-2
+            "
           >
 
-            <span className="text-text">
-              {d.ml} ml
-            </span>
+            {/* HEADER */}
+            <div className="flex items-center justify-between text-sm">
 
-            <div className="flex-1 mx-3 h-2 bg-border rounded-full overflow-hidden">
+              <span className="text-text font-medium">
+                {d.ml} ml
+              </span>
+
+              <span className="text-muted">
+                {max} posibles
+              </span>
+
+            </div>
+
+            {/* BAR */}
+            <div className="w-full h-3 sm:h-2 bg-border rounded-full overflow-hidden">
 
               <div
-                className="h-full bg-accent"
+                className="h-full bg-accent transition-all"
                 style={{
                   width: `${Math.min(max * 6, 100)}%`
                 }}
               />
 
             </div>
-
-            <span className="text-muted">
-              {max} posibles
-            </span>
 
           </div>
 

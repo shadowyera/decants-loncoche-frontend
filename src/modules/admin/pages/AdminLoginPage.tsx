@@ -17,14 +17,12 @@ export function AdminLoginPage() {
   const [loading, setLoading] = useState(false)
 
   async function handleSubmit(e: React.FormEvent) {
-
     e.preventDefault()
 
     setLoading(true)
     setError(null)
 
     try {
-
       const { data } = await apiClient.post("/auth/login", {
         email,
         password
@@ -35,15 +33,10 @@ export function AdminLoginPage() {
       navigate("/admin/perfumes")
 
     } catch {
-
       setError("Credenciales incorrectas")
-
     } finally {
-
       setLoading(false)
-
     }
-
   }
 
   return (
@@ -56,29 +49,29 @@ export function AdminLoginPage() {
         flex
         items-center
         justify-center
-        px-6
+        px-4 sm:px-6
       "
     >
 
-      <Container className="max-w-md">
+      <Container className="w-full max-w-sm sm:max-w-md">
 
         <div
           className="
             border
             border-border
             bg-surface
-            rounded-lg
-            p-10
+            rounded-xl
+            p-6 sm:p-8 md:p-10
+            shadow-sm
           "
         >
 
           {/* HEADER */}
-
-          <div className="space-y-3 text-center mb-8">
+          <div className="space-y-2 sm:space-y-3 text-center mb-6 sm:mb-8">
 
             <p
               className="
-                text-xs
+                text-[10px] sm:text-xs
                 tracking-[0.25em]
                 uppercase
                 text-accent
@@ -87,41 +80,41 @@ export function AdminLoginPage() {
               Decants Loncoche
             </p>
 
-            <h1 className="font-serif text-3xl">
+            <h1 className="font-serif text-2xl sm:text-3xl">
               Panel Admin
             </h1>
 
-            <p className="text-muted text-sm">
+            <p className="text-muted text-xs sm:text-sm">
               Acceso restringido
             </p>
 
           </div>
 
-
           {/* FORM */}
-
           <form
             onSubmit={handleSubmit}
-            className="space-y-5"
+            className="space-y-4 sm:space-y-5"
           >
 
             <input
               type="email"
               placeholder="Email"
               value={email}
-              onChange={(e) =>
-                setEmail(e.target.value)
-              }
+              onChange={(e) => setEmail(e.target.value)}
               className="
                 w-full
                 px-4
-                py-2.5
+                py-2.5 sm:py-3
+                text-sm
                 rounded-md
                 bg-background
                 border
                 border-border
                 text-text
+                placeholder:text-muted
                 focus:outline-none
+                focus:ring-1
+                focus:ring-accent
                 focus:border-accent
                 transition
               "
@@ -132,19 +125,21 @@ export function AdminLoginPage() {
               type="password"
               placeholder="Password"
               value={password}
-              onChange={(e) =>
-                setPassword(e.target.value)
-              }
+              onChange={(e) => setPassword(e.target.value)}
               className="
                 w-full
                 px-4
-                py-2.5
+                py-2.5 sm:py-3
+                text-sm
                 rounded-md
                 bg-background
                 border
                 border-border
                 text-text
+                placeholder:text-muted
                 focus:outline-none
+                focus:ring-1
+                focus:ring-accent
                 focus:border-accent
                 transition
               "
@@ -152,22 +147,18 @@ export function AdminLoginPage() {
             />
 
             {error && (
-
-              <p className="text-red-400 text-sm">
+              <p className="text-red-400 text-xs sm:text-sm">
                 {error}
               </p>
-
             )}
 
             <Button
               type="submit"
               size="lg"
               disabled={loading}
-              className="w-full"
+              className="w-full mt-2"
             >
-              {loading
-                ? "Entrando..."
-                : "Entrar"}
+              {loading ? "Entrando..." : "Entrar"}
             </Button>
 
           </form>
@@ -179,5 +170,4 @@ export function AdminLoginPage() {
     </div>
 
   )
-
 }

@@ -3,17 +3,12 @@ import type {
   ESTADO_PEDIDO
 } from "../../../../domains/pedido/domain/pedido.types"
 
-
 interface PedidoRowProps {
-
   pedido: Pedido
-
   onOpen: () => void
   onIniciar: (id: string) => void
   onConfirmar: (id: string) => void
-
 }
-
 
 export default function PedidoRow({
   pedido,
@@ -25,145 +20,206 @@ export default function PedidoRow({
   const estado = pedido.estado as ESTADO_PEDIDO
 
   return (
+    <>
+      {/* =========================
+          MOBILE (CARD)
+      ========================= */}
+      <div className="sm:hidden">
 
-    <tr
-      className="
-        border-t border-border
-        hover:bg-surfaceSoft
-        transition
-      "
-    >
+        <div className="
+          bg-surface
+          border border-border
+          rounded-xl
+          p-4
+          space-y-3
+        ">
 
-      {/* PEDIDO */}
+          {/* HEADER */}
+          <div className="flex justify-between items-start">
 
-      <td className="px-4 py-3 font-medium">
+            <div>
+              <p className="font-semibold">
+                Pedido {pedido.numeroPedido}
+              </p>
 
-        {pedido.numeroPedido}
+              <p className="text-xs text-muted">
+                {pedido.clienteNombre ?? "Cliente"}
+              </p>
 
-      </td>
+              {pedido.clienteTelefono && (
+                <p className="text-xs text-muted">
+                  {pedido.clienteTelefono}
+                </p>
+              )}
+            </div>
 
+            <EstadoBadge estado={estado} />
 
-      {/* CLIENTE */}
+          </div>
 
-      <td className="px-4 py-3">
+          {/* TOTAL */}
+          <div className="flex justify-between text-sm">
 
-        <div className="flex flex-col">
-
-          <span>
-            {pedido.clienteNombre ?? "Cliente"}
-          </span>
-
-          {pedido.clienteTelefono && (
-
-            <span className="text-xs text-muted">
-              {pedido.clienteTelefono}
+            <span className="text-muted">
+              Total
             </span>
 
-          )}
+            <span className="font-medium">
+              ${pedido.total.toLocaleString()}
+            </span>
+
+          </div>
+
+          {/* ACTIONS */}
+          <div className="flex flex-col gap-2 pt-2">
+
+            <button
+              onClick={onOpen}
+              className="
+                w-full
+                text-sm
+                py-2
+                rounded-md
+                border border-border
+                hover:bg-surfaceSoft
+              "
+            >
+              Ver detalle
+            </button>
+
+            {estado === "PENDIENTE" && (
+              <button
+                onClick={() => onIniciar(pedido._id)}
+                className="
+                  w-full
+                  text-sm
+                  py-2
+                  rounded-md
+                  bg-blue-500/10
+                  text-blue-500
+                "
+              >
+                Iniciar pedido
+              </button>
+            )}
+
+            {estado === "EN_PROCESO" && (
+              <button
+                onClick={() => onConfirmar(pedido._id)}
+                className="
+                  w-full
+                  text-sm
+                  py-2
+                  rounded-md
+                  bg-green-500/10
+                  text-green-500
+                "
+              >
+                Confirmar pago
+              </button>
+            )}
+
+          </div>
 
         </div>
 
-      </td>
+      </div>
 
 
-      {/* TOTAL */}
+      {/* =========================
+          DESKTOP (TABLE ROW)
+      ========================= */}
+      <tr
+        className="
+          hidden sm:table-row
+          border-t border-border
+          hover:bg-surfaceSoft
+          transition
+        "
+      >
 
-      <td className="px-4 py-3 font-medium">
+        <td className="px-4 py-3 font-medium">
+          {pedido.numeroPedido}
+        </td>
 
-        ${pedido.total.toLocaleString()}
+        <td className="px-4 py-3">
+          <div className="flex flex-col">
+            <span>
+              {pedido.clienteNombre ?? "Cliente"}
+            </span>
+            {pedido.clienteTelefono && (
+              <span className="text-xs text-muted">
+                {pedido.clienteTelefono}
+              </span>
+            )}
+          </div>
+        </td>
 
-      </td>
+        <td className="px-4 py-3 font-medium">
+          ${pedido.total.toLocaleString()}
+        </td>
 
+        <td className="px-4 py-3">
+          <EstadoBadge estado={estado} />
+        </td>
 
-      {/* ESTADO */}
-
-      <td className="px-4 py-3">
-
-        <EstadoBadge estado={estado} />
-
-      </td>
-
-
-      {/* ACCIONES */}
-
-      <td className="px-4 py-3">
-
-        <div className="flex justify-end items-center gap-2">
-
-          {/* VER DETALLE */}
-
-          <button
-            onClick={onOpen}
-            className="
-              text-xs
-              px-3 py-1.5
-              rounded-md
-              border border-border
-              hover:bg-surfaceSoft
-              transition
-            "
-          >
-            Ver
-          </button>
-
-
-          {/* INICIAR */}
-
-          {estado === "PENDIENTE" && (
+        <td className="px-4 py-3">
+          <div className="flex justify-end items-center gap-2">
 
             <button
-              onClick={() => onIniciar(pedido._id)}
+              onClick={onOpen}
               className="
                 text-xs
                 px-3 py-1.5
                 rounded-md
-                bg-blue-500/10
-                text-blue-500
-                hover:bg-blue-500/20
-                transition
+                border border-border
+                hover:bg-surfaceSoft
               "
             >
-              Iniciar
+              Ver
             </button>
 
-          )}
+            {estado === "PENDIENTE" && (
+              <button
+                onClick={() => onIniciar(pedido._id)}
+                className="
+                  text-xs
+                  px-3 py-1.5
+                  rounded-md
+                  bg-blue-500/10
+                  text-blue-500
+                "
+              >
+                Iniciar
+              </button>
+            )}
 
+            {estado === "EN_PROCESO" && (
+              <button
+                onClick={() => onConfirmar(pedido._id)}
+                className="
+                  text-xs
+                  px-3 py-1.5
+                  rounded-md
+                  bg-green-500/10
+                  text-green-500
+                "
+              >
+                Confirmar
+              </button>
+            )}
 
-          {/* CONFIRMAR */}
+          </div>
+        </td>
 
-          {estado === "EN_PROCESO" && (
-
-            <button
-              onClick={() => onConfirmar(pedido._id)}
-              className="
-                text-xs
-                px-3 py-1.5
-                rounded-md
-                bg-green-500/10
-                text-green-500
-                hover:bg-green-500/20
-                transition
-              "
-            >
-              Confirmar
-            </button>
-
-          )}
-
-        </div>
-
-      </td>
-
-    </tr>
-
+      </tr>
+    </>
   )
 
 }
 
 
-/* ========================================
-   BADGE ESTADO
-======================================== */
+/* BADGE */
 
 function EstadoBadge({
   estado
@@ -172,35 +228,25 @@ function EstadoBadge({
 }) {
 
   const estilos = {
-
-    PENDIENTE:
-      "bg-yellow-500/10 text-yellow-500",
-
-    EN_PROCESO:
-      "bg-blue-500/10 text-blue-500",
-
-    PAGADO:
-      "bg-green-500/10 text-green-500",
-
-    CANCELADO:
-      "bg-red-500/10 text-red-500"
-
+    PENDIENTE: "bg-yellow-500/10 text-yellow-500",
+    EN_PROCESO: "bg-blue-500/10 text-blue-500",
+    PAGADO: "bg-green-500/10 text-green-500",
+    CANCELADO: "bg-red-500/10 text-red-500"
   }
 
   return (
-
     <span
       className={`
         text-xs
         px-2 py-1
         rounded-md
         font-medium
+        whitespace-nowrap
         ${estilos[estado]}
       `}
     >
       {estado}
     </span>
-
   )
 
 }
