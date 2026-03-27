@@ -6,6 +6,7 @@ import { PerfumeCard } from "../../../domains/catalogo/ui/PerfumeCard"
 import { CatalogoFilters } from "../../../domains/catalogo/ui/CatalogoFilters"
 
 import { Container } from "../../../shared/components/ui/Container"
+import { Avisos } from "../ui/Avisos"
 
 export function CatalogoPage() {
 
@@ -55,7 +56,6 @@ export function CatalogoPage() {
       <Container className="pt-20 md:pt-28 space-y-8 md:space-y-12">
 
         {/* HEADER */}
-
         <div className="space-y-2 text-center md:text-left">
 
           <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl text-text">
@@ -70,7 +70,6 @@ export function CatalogoPage() {
 
 
         {/* FILTROS */}
-
         <CatalogoFilters
           search={search}
           onSearchChange={setSearch}
@@ -79,18 +78,20 @@ export function CatalogoPage() {
         />
 
 
+        {/* 🔥 AVISO (AQUÍ VA EL POWER) */}
+        <Avisos />
+
+
         <div className="gold-divider" />
 
 
         {/* RESULTADOS */}
-
         <p className="text-xs sm:text-sm text-muted text-center md:text-left">
           {productosFiltrados.length} perfumes encontrados
         </p>
 
 
         {/* GRID */}
-
         <motion.div
           className="
             grid
