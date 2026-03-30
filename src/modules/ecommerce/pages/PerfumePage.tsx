@@ -46,17 +46,9 @@ export function PerfumePage() {
     )
   }
 
-  /* =========================
-     FIX TYPESCRIPT
-  ========================= */
-
   const notas = producto.notas ?? []
   const familias = producto.familiasOlfativas ?? []
   const recs = recomendaciones ?? []
-
-  /* =========================
-     DISPONIBILIDAD
-  ========================= */
 
   const hayDecants = producto.decants.length > 0
 
@@ -75,7 +67,6 @@ export function PerfumePage() {
       <Container className="max-w-6xl">
 
         {/* BACK */}
-
         <button
           onClick={() => navigate("/catalogo")}
           className="flex items-center gap-2 text-xs sm:text-sm text-muted hover:text-text transition mb-4"
@@ -84,9 +75,7 @@ export function PerfumePage() {
           Volver
         </button>
 
-
         {/* BREADCRUMB */}
-
         <div className="flex items-center gap-2 text-xs sm:text-sm text-muted mb-6 md:mb-12">
 
           <Link to="/catalogo" className="hover:text-accent transition">
@@ -101,9 +90,7 @@ export function PerfumePage() {
 
         </div>
 
-
         {/* PRODUCTO */}
-
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
@@ -111,24 +98,21 @@ export function PerfumePage() {
           className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 items-start"
         >
 
-          {/* IMAGEN */}
-
-          <div className="relative flex items-center justify-center p-6 sm:p-10 md:p-12">
-
-            <div className="absolute bottom-4 w-[180px] sm:w-[240px] h-[40px] sm:h-[50px] bg-black/70 blur-3xl rounded-full opacity-60" />
+          {/* IMAGEN (SIN SOMBRA) */}
+          <div className="relative flex items-center justify-center p-6 sm:p-10 md:p-16">
 
             {producto.imagen ? (
 
               <motion.img
                 src={producto.imagen}
                 alt={producto.nombre}
-                animate={{ y: [-6, 6, -6] }}
+                animate={{ y: [-10, 10, -10] }}
                 transition={{
                   duration: 6,
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}
-                className="relative z-10 object-contain max-h-[260px] sm:max-h-[320px] md:max-h-[520px]"
+                className="relative z-10 object-contain w-full max-h-[700px] md:max-h-[750px]"
               />
 
             ) : (
@@ -141,13 +125,10 @@ export function PerfumePage() {
 
           </div>
 
-
           {/* INFO */}
-
           <div className="space-y-8 md:space-y-12">
 
             {/* TITULO */}
-
             <div>
 
               <p className="text-xs sm:text-sm tracking-[0.25em] uppercase text-accent">
@@ -182,18 +163,14 @@ export function PerfumePage() {
 
             </div>
 
-
             {/* DESCRIPCIÓN */}
-
             {producto.descripcion && (
               <p className="text-muted text-sm sm:text-base leading-relaxed max-w-lg">
                 {producto.descripcion}
               </p>
             )}
 
-
             {/* PERFIL OLFATIVO */}
-
             {familias.length > 0 && (
 
               <div className="space-y-3">
@@ -221,9 +198,7 @@ export function PerfumePage() {
 
             )}
 
-
             {/* SELECTOR */}
-
             <div className="space-y-3">
 
               <p className="text-sm font-medium text-text">
@@ -249,14 +224,10 @@ export function PerfumePage() {
 
             </div>
 
-
             {/* BADGES */}
-
             <ProductTrustBadges />
 
-
             {/* NOTAS */}
-
             {notas.length > 0 && (
 
               <div className="pt-6 md:pt-8 border-t border-border">
@@ -290,9 +261,7 @@ export function PerfumePage() {
 
       </Container>
 
-
       {/* RECOMENDACIONES */}
-
       {recs.length > 0 && (
 
         <section>
@@ -325,5 +294,4 @@ export function PerfumePage() {
     </div>
 
   )
-
 }

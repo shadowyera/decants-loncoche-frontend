@@ -10,14 +10,9 @@ export function Card({ className, ...props }: CardProps) {
         "bg-surface",
         "border border-border",
         "rounded-xl",
-
-        "shadow-sm",
-
         "transition-all duration-normal ease-premium",
-
         "hover:bg-surfaceSoft",
         "hover:border-accent/40",
-        "hover:shadow-md",
         "hover:-translate-y-1",
 
         className
