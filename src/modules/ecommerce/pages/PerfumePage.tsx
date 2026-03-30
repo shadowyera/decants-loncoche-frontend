@@ -72,7 +72,7 @@ export function PerfumePage() {
           className="flex items-center gap-2 text-xs sm:text-sm text-muted hover:text-text transition mb-4"
         >
           <ArrowLeft size={16} />
-          Volver
+          Volver al catálogo
         </button>
 
         {/* BREADCRUMB */}
@@ -98,7 +98,7 @@ export function PerfumePage() {
           className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 items-start"
         >
 
-          {/* IMAGEN (SIN SOMBRA) */}
+          {/* IMAGEN */}
           <div className="relative flex items-center justify-center p-6 sm:p-10 md:p-16">
 
             {producto.imagen ? (
@@ -112,7 +112,7 @@ export function PerfumePage() {
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}
-                className="relative z-10 object-contain w-full max-h-[700px] md:max-h-[750px]"
+                className="object-contain w-full max-h-[700px] md:max-h-[750px]"
               />
 
             ) : (
@@ -139,6 +139,7 @@ export function PerfumePage() {
                 {producto.nombre}
               </h1>
 
+              {/* STATUS */}
               <div className="pt-3 flex gap-2 flex-wrap">
 
                 {!hayDecants && (
@@ -155,7 +156,7 @@ export function PerfumePage() {
 
                 {disponible && pocoStock && (
                   <span className="text-[10px] px-2 py-0.5 rounded-full bg-red-500 text-white">
-                    ⚡ Poco stock
+                    ⚡ Quedan pocas unidades
                   </span>
                 )}
 
@@ -163,9 +164,9 @@ export function PerfumePage() {
 
             </div>
 
-            {/* DESCRIPCIÓN */}
+            {/* DESCRIPCIÓN (FIX SALTO DE LINEA) */}
             {producto.descripcion && (
-              <p className="text-muted text-sm sm:text-base leading-relaxed max-w-lg">
+              <p className="text-muted text-sm sm:text-base leading-relaxed max-w-lg whitespace-pre-line">
                 {producto.descripcion}
               </p>
             )}
@@ -185,7 +186,7 @@ export function PerfumePage() {
 
                     <span
                       key={familia}
-                      className="px-2.5 py-1 text-[10px] sm:text-xs rounded-full border border-accent/30 text-accent bg-accent/10"
+                      className="px-3 py-1 text-xs rounded-full border border-accent/30 text-accent bg-accent/10"
                     >
                       {familia}
                     </span>
@@ -202,7 +203,7 @@ export function PerfumePage() {
             <div className="space-y-3">
 
               <p className="text-sm font-medium text-text">
-                Tamaño
+                Selecciona tu tamaño
               </p>
 
               {!hayDecants ? (
@@ -224,7 +225,7 @@ export function PerfumePage() {
 
             </div>
 
-            {/* BADGES */}
+            {/* TRUST */}
             <ProductTrustBadges />
 
             {/* NOTAS */}
@@ -233,7 +234,7 @@ export function PerfumePage() {
               <div className="pt-6 md:pt-8 border-t border-border">
 
                 <p className="text-xs tracking-[0.2em] uppercase text-muted mb-4">
-                  Notas principales
+                  Notas del perfume
                 </p>
 
                 <div className="flex flex-wrap gap-2 sm:gap-3">
@@ -242,7 +243,7 @@ export function PerfumePage() {
 
                     <span
                       key={nota}
-                      className="px-3 py-1 text-xs sm:text-sm rounded-full text-text bg-white/5 border border-border"
+                      className="px-3 py-1 text-xs rounded-full text-text bg-white/5 border border-border"
                     >
                       {nota}
                     </span>
