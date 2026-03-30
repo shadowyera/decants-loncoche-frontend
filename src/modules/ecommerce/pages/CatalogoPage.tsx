@@ -8,6 +8,17 @@ import { CatalogoFilters } from "../../../domains/catalogo/ui/CatalogoFilters"
 import { Container } from "../../../shared/components/ui/Container"
 import { Avisos } from "../ui/Avisos"
 
+/* ===============================
+   NORMALIZAR TEXTO
+=============================== */
+
+function normalizar(texto: string) {
+  return texto
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+}
+
 export function CatalogoPage() {
 
   const { productos, isLoading } = useCatalogo()
@@ -19,17 +30,24 @@ export function CatalogoPage() {
 
     let lista = productos
 
+    /* 🔍 BUSQUEDA */
     if (search.trim()) {
-      const q = search.toLowerCase()
+      const q = normalizar(search.trim())
+
       lista = lista.filter((p) =>
-        p.nombre.toLowerCase().includes(q) ||
-        p.marca.toLowerCase().includes(q)
+        normalizar(p.nombre).includes(q) ||
+        normalizar(p.marca).includes(q)
       )
     }
 
+    /* 🎯 FILTRO FAMILIAS (FIX REAL) */
     if (filtro !== "todos") {
+      const filtroNormalizado = normalizar(filtro)
+
       lista = lista.filter((p) =>
-        p.familiasOlfativas?.includes(filtro)
+        p.familiasOlfativas?.some(f =>
+          normalizar(f) === filtroNormalizado
+        )
       )
     }
 
@@ -78,7 +96,7 @@ export function CatalogoPage() {
         />
 
 
-        {/* 🔥 AVISO (AQUÍ VA EL POWER) */}
+        {/* 🔥 AVISO */}
         <Avisos />
 
 

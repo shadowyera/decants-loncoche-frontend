@@ -8,13 +8,16 @@ interface CatalogoFiltersProps {
   onFiltroChange: (value: string) => void
 }
 
+/* 🔥 ALINEADO CON TU BACKEND */
 const filtros = [
   { label: "Todos", value: "todos" },
   { label: "Dulce", value: "dulce" },
   { label: "Fresco", value: "fresco" },
-  { label: "Amaderado", value: "amaderado" },
   { label: "Cítrico", value: "citrico" },
-  { label: "Floral", value: "floral" },
+  { label: "Frutal", value: "frutal" },
+  { label: "Amaderado", value: "amaderado" },
+  { label: "Ámbar", value: "ambarado" },
+  { label: "Gourmand", value: "gourmand" },
 ]
 
 export function CatalogoFilters({
