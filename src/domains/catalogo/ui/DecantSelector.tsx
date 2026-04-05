@@ -1,14 +1,13 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 
 import type { CatalogoDecant } from "../domain/catalogo.types"
 
 import { Button } from "../../../shared/components/ui/Button"
-
 import { useCart } from "../../carrito/hooks/useCart"
 
 interface DecantSelectorProps {
   decants: CatalogoDecant[]
-  perfumeId: string // 🔥 FIX
+  perfumeId: string
   perfumeNombre: string
   perfumeImagen?: string
   disabled?: boolean
@@ -25,7 +24,21 @@ export function DecantSelector({
   const { addItem, items } = useCart()
 
   /* =========================
-     SELECCIÓN DECANT
+     DATA DERIVADA
+  ========================= */
+
+  const decantsDisponibles = useMemo(
+    () => decants.filter(d => d.stockDisponible > 0),
+    [decants]
+  )
+
+  const recomendado = useMemo(
+    () => decants.find(d => d.ml === 5) ?? decants[0],
+    [decants]
+  )
+
+  /* =========================
+     SELECCIÓN
   ========================= */
 
   const [selectedDecantId, setSelectedDecantId] =
@@ -33,16 +46,16 @@ export function DecantSelector({
 
   useEffect(() => {
 
-    if (!selectedDecantId && decants.length > 0) {
+    if (!decants.length) return
 
-      const primerDisponible =
-        decants.find(d => d.stockDisponible > 0)?.id ?? decants[0].id
+    const defaultDecant =
+      decantsDisponibles[0]?.id ??
+      recomendado?.id ??
+      decants[0].id
 
-      setSelectedDecantId(primerDisponible)
+    setSelectedDecantId(defaultDecant)
 
-    }
-
-  }, [decants, selectedDecantId])
+  }, [decants])
 
   const selectedDecant = decants.find(
     d => d.id === selectedDecantId
@@ -51,7 +64,7 @@ export function DecantSelector({
   const stock = selectedDecant?.stockDisponible ?? 0
 
   /* =========================
-     CANTIDAD EN CARRITO
+     CARRITO
   ========================= */
 
   const cantidadEnCarrito = items
@@ -59,11 +72,10 @@ export function DecantSelector({
     .reduce((total, item) => total + item.cantidad, 0)
 
   const MAX_DECANTS = 5
-
   const limiteAlcanzado = cantidadEnCarrito >= MAX_DECANTS
 
   /* =========================
-     ADD TO CART
+     ACCIÓN
   ========================= */
 
   function handleAddToCart() {
@@ -74,7 +86,7 @@ export function DecantSelector({
 
     addItem({
       decantId: selectedDecant.id,
-      perfumeId, // 🔥 FIX IMPORTANTE
+      perfumeId,
       ml: selectedDecant.ml,
       precio: selectedDecant.precio,
       cantidad: 1,
@@ -90,7 +102,9 @@ export function DecantSelector({
 
     <div className="space-y-10">
 
-      {/* SELECTOR TAMAÑOS */}
+      {/* =========================
+          SELECTOR
+      ========================= */}
 
       <div className="flex gap-3 flex-wrap">
 
@@ -99,6 +113,7 @@ export function DecantSelector({
           const stockDecant = decant.stockDisponible ?? 0
           const isSelected = decant.id === selectedDecantId
           const sinStock = stockDecant === 0
+          const isRecomendado = decant.ml === recomendado?.ml
 
           return (
 
@@ -107,43 +122,31 @@ export function DecantSelector({
               onClick={() => !sinStock && setSelectedDecantId(decant.id)}
               disabled={sinStock || disabled}
               className={`
-                px-4
-                py-2
-                text-sm
-                rounded-full
-                border
-                transition-all
-                duration-300
+                relative
+                px-4 py-2 text-sm rounded-full border
+                transition-all duration-300
 
                 ${sinStock
-                  ? `
-                    border-border
-                    text-muted
-                    opacity-40
-                    cursor-not-allowed
-                  `
+                  ? "border-border text-muted opacity-40 cursor-not-allowed"
                   : isSelected
-                    ? `
-                      border-accent
-                      text-accent
-                      bg-transparent
-                      shadow-[0_0_12px_rgba(212,175,55,0.15)]
-                    `
-                    : `
-                      border-border
-                      text-text
-                      bg-surface
-                      hover:border-accent
-                      hover:text-accent
-                    `
+                    ? "border-accent text-accent bg-transparent shadow-[0_0_12px_rgba(212,175,55,0.15)]"
+                    : "border-border text-text bg-surface hover:border-accent hover:text-accent"
                 }
               `}
             >
 
               {decant.ml} ml
 
+              {/* 🔥 RECOMENDADO */}
+              {isRecomendado && !sinStock && (
+                <span className="ml-2 text-[10px] text-accent">
+                  🔥
+                </span>
+              )}
+
+              {/* ⚡ STOCK BAJO */}
               {stockDecant > 0 && stockDecant <= 3 && (
-                <span className="ml-2 text-[10px] text-red-400">
+                <span className="ml-1 text-[10px] text-red-400">
                   ⚡
                 </span>
               )}
@@ -156,35 +159,20 @@ export function DecantSelector({
 
       </div>
 
+      {/* =========================
+          PRECIO + CTA
+      ========================= */}
 
-      {/* PRECIO + BOTÓN */}
-
-      <div
-        className="
-          flex
-          items-center
-          justify-between
-          pt-8
-          border-t
-          border-border
-        "
-      >
+      <div className="flex items-center justify-between pt-8 border-t border-border">
 
         <div className="space-y-1">
 
-          <p
-            className="
-              text-3xl
-              font-semibold
-              tracking-tight
-              text-transparent
-              bg-clip-text
-              bg-gradient-to-r
-              from-[#e7d7a8]
-              to-[#caa85a]
-            "
-          >
+          <p className="text-3xl font-semibold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-[#e7d7a8] to-[#caa85a]">
             ${selectedDecant.precio.toLocaleString()}
+          </p>
+
+          <p className="text-xs text-muted">
+            {selectedDecant.ml} ml
           </p>
 
           {stock > 0 && stock <= 3 && (
@@ -210,7 +198,11 @@ export function DecantSelector({
             stock === 0
           }
         >
-          Agregar al carrito
+          {stock === 0
+            ? "Sin stock"
+            : limiteAlcanzado
+              ? "Límite alcanzado"
+              : "Agregar al carrito"}
         </Button>
 
       </div>
@@ -218,5 +210,4 @@ export function DecantSelector({
     </div>
 
   )
-
 }

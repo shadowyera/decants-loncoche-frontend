@@ -1,11 +1,14 @@
 export interface CatalogoDecant {
+
   id: string
-  perfumeId: string
 
   ml: number
   precio: number
 
   stockDisponible: number
+
+  sku: string
+
 }
 
 export interface CatalogoPerfume {
@@ -53,9 +56,9 @@ export interface CatalogoProducto {
      BADGES (UI)
   ====================== */
 
-  nuevo?: boolean
-  pocoStock?: boolean
-  masVendido?: boolean
+  nuevo: boolean
+  pocoStock: boolean
+  masVendido: boolean
 
   /* ======================
      DECANTS

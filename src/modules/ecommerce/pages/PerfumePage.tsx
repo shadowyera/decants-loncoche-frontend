@@ -50,13 +50,16 @@ export function PerfumePage() {
   const familias = producto.familiasOlfativas ?? []
   const recs = recomendaciones ?? []
 
-  const hayDecants = producto.decants.length > 0
+  // 🔥 YA VIENEN LIMPIOS DESDE BACKEND
+  const decants = producto.decants ?? []
 
-  const disponible = producto.decants.some(
+  const hayDecants = decants.length > 0
+
+  const disponible = decants.some(
     (d) => d.stockDisponible > 0
   )
 
-  const pocoStock = producto.decants.some(
+  const pocoStock = decants.some(
     (d) => d.stockDisponible > 0 && d.stockDisponible <= 3
   )
 
@@ -92,6 +95,7 @@ export function PerfumePage() {
 
         {/* PRODUCTO */}
         <motion.div
+          key={slug}
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
@@ -102,7 +106,6 @@ export function PerfumePage() {
           <div className="relative flex items-center justify-center p-6 sm:p-10 md:p-16">
 
             {producto.imagen ? (
-
               <motion.img
                 src={producto.imagen}
                 alt={producto.nombre}
@@ -114,13 +117,10 @@ export function PerfumePage() {
                 }}
                 className="object-contain w-full max-h-[700px] md:max-h-[750px]"
               />
-
             ) : (
-
               <div className="flex items-center justify-center h-[250px] text-muted text-sm">
                 Sin imagen
               </div>
-
             )}
 
           </div>
@@ -164,7 +164,7 @@ export function PerfumePage() {
 
             </div>
 
-            {/* DESCRIPCIÓN (FIX SALTO DE LINEA) */}
+            {/* DESCRIPCIÓN */}
             {producto.descripcion && (
               <p className="text-muted text-sm sm:text-base leading-relaxed max-w-lg whitespace-pre-line">
                 {producto.descripcion}
@@ -183,14 +183,12 @@ export function PerfumePage() {
                 <div className="flex flex-wrap gap-2">
 
                   {familias.map((familia) => (
-
                     <span
                       key={familia}
                       className="px-3 py-1 text-xs rounded-full border border-accent/30 text-accent bg-accent/10"
                     >
                       {familia}
                     </span>
-
                   ))}
 
                 </div>
@@ -216,7 +214,7 @@ export function PerfumePage() {
                 </p>
               ) : (
                 <DecantSelector
-                  decants={producto.decants}
+                  decants={decants}
                   perfumeId={producto.id}
                   perfumeNombre={producto.nombre}
                   perfumeImagen={producto.imagen}
@@ -240,14 +238,12 @@ export function PerfumePage() {
                 <div className="flex flex-wrap gap-2 sm:gap-3">
 
                   {notas.map((nota) => (
-
                     <span
                       key={nota}
                       className="px-3 py-1 text-xs rounded-full text-text bg-white/5 border border-border"
                     >
                       {nota}
                     </span>
-
                   ))}
 
                 </div>
@@ -276,12 +272,10 @@ export function PerfumePage() {
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6">
 
               {recs.map((perfume) => (
-
                 <PerfumeCard
                   key={perfume.id}
                   producto={perfume}
                 />
-
               ))}
 
             </div>
@@ -293,6 +287,5 @@ export function PerfumePage() {
       )}
 
     </div>
-
   )
 }
